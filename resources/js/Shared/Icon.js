@@ -1,6 +1,11 @@
 import React from 'react';
+import FaIcon from './FaIcon';
 
 export default ({ name, className }) => {
+  if (name.startsWith('fa')) {
+    return <FaIcon name={name} className={className} />;
+  }
+
   if (name === 'apple') {
     return (
       <svg
