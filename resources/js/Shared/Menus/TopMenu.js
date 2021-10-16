@@ -39,7 +39,7 @@ export default props => {
     {
       text: 'Pallet Re-Print',
       title: 'Reprint a pallet label Not Active',
-      route: 'contacts',
+      route: 'contacts.create',
       active: false,
       disabled: false
     },
