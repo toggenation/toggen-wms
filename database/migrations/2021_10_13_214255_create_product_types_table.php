@@ -17,13 +17,14 @@ class CreateProductTypesTable extends Migration
             $table->integer('id', true);
             $table->integer('default_inventory_status_id')->nullable()->comment('Initial inventory status when record is created');
             $table->boolean('active')->nullable();
-            $table->string('name', 20);
+            $table->string('name', 20)->unique();
             $table->string('code_prefix', 20);
             $table->string('storage_temperature', 20);
             $table->integer('default_putaway_location_id')->nullable()->index('fk_product_types_locations1_idx');
             $table->string('code_regex', 45);
             $table->string('code_regex_description', 100);
             $table->boolean('enable_pick_app')->nullable();
+            $table->timestamps();
         });
     }
 

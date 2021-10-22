@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Batch;
+use App\Services\BatchYDDDXX;
 use League\Glide\Server;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->bind(Batch::class, BatchYDDDXX::class);
         $this->registerGlide();
     }
 
@@ -31,5 +34,4 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
     }
-
 }

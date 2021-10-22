@@ -11,13 +11,13 @@ import FileInput from '@/Shared/FileInput';
 import TrashedMessage from '@/Shared/TrashedMessage';
 
 const Edit = () => {
-  const { user } = usePage().props;
+  const { user, roles } = usePage().props;
   const { data, setData, errors, post, processing } = useForm({
     first_name: user.first_name || '',
     last_name: user.last_name || '',
     email: user.email || '',
     password: user.password || '',
-    owner: user.owner ? '1' : '0' || '0',
+    role_id: user.role_id || '',
     photo: '',
 
     // NOTE: When working with Laravel PUT/PATCH requests and FormData
@@ -104,7 +104,7 @@ const Edit = () => {
               value={data.password}
               onChange={e => setData('password', e.target.value)}
             />
-            <SelectInput
+            {/* <SelectInput
               className="w-full pb-8 pr-6 lg:w-1/2"
               label="Owner"
               name="owner"
@@ -114,7 +114,25 @@ const Edit = () => {
             >
               <option value="1">Yes</option>
               <option value="0">No</option>
+            </SelectInput> */}
+            <SelectInput
+              className="w-full pb-8 pr-6 lg:w-1/2"
+              label="Role"
+              name="role_id"
+              errors={errors.role_id}
+              value={data.role_id}
+              onChange={e => setData('role_id', e.target.value)}
+            >
+              {roles &&
+                roles.map(role => {
+                  return (
+                    <option key={role.id} value={role.id}>
+                      {role.name}
+                    </option>
+                  );
+                })}
             </SelectInput>
+
             <FileInput
               className="w-full pb-8 pr-6 lg:w-1/2"
               label="Photo"

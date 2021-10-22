@@ -7,6 +7,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,7 @@ class UsersController extends Controller
     {
         return Inertia::render('Users/Edit', [
             'user' => new UserResource($user),
+            'roles' => Role::where('active', 1)->get()
         ]);
     }
 
@@ -55,7 +57,6 @@ class UsersController extends Controller
         $user->update(
             $request->validated()
         );
-
         return Redirect::back()->with('success', 'User updated.');
     }
 

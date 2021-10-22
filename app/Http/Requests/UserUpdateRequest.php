@@ -21,13 +21,14 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'max:50'],
             'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email',
+            'email' => [
+                'required', 'max:50', 'email',
                 Rule::unique('users')->ignore($this->route('user')->id)
             ],
             'password' => ['nullable'],
-            'owner' => ['required', 'boolean'],
+            // 'owner' => ['required', 'boolean'],
+            'role_id' => ['required'],
             'photo' => ['nullable', 'image'],
         ];
     }
-
 }

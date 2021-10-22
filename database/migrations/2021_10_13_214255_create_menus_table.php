@@ -13,20 +13,20 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
+        //
         Schema::create('menus', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('parent_id')->nullable();
-            $table->integer('lft')->nullable();
-            $table->integer('rght')->nullable();
-            $table->boolean('active');
-            $table->boolean('divider');
-            $table->boolean('admin_menu');
+            // $table->integer('parent_id')->nullable();
+            // $table->integer('lft')->nullable();
+            // $table->integer('rght')->nullable();
+            $table->boolean('active')->default(1);
+            $table->string('icon')->nullable();
             $table->string('name', 45)->nullable();
-            $table->string('description', 45)->nullable();
-            $table->string('url', 254)->nullable();
-            $table->string('title', 50)->nullable();
-            $table->string('controller_action');
-            $table->string('extra_args');
+            $table->string('description', 100)->nullable();
+            $table->string('route_url', 254)->nullable()->comment("Route name, # or url https://external.com");
+            $table->string('title', 100)->nullable();
+            $table->string('extra_args')->nullable();
+            $table->nestedSet();
             $table->timestamps();
         });
     }

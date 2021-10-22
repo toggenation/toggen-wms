@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackSizesTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePackSizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pack_sizes', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->string('pack_size', 30);
-            $table->string('comment', 100);
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('description');
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreatePackSizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pack_sizes');
+        Schema::dropIfExists('roles');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\UserResource;
+use App\Models\Menu;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
+            'app_menus' => function () {
+                return ['menus' => Menu::where('active', '=', 1)->withDepth()->get()->toTree()];
+            },
+            // 'foo' => 'bar',
             'auth' => function () {
                 return [
                     'user' => Auth::check() ? new UserResource(Auth::user()->load('account')) : null

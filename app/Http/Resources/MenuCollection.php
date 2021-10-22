@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserCollection extends ResourceCollection
+class MenuCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -17,11 +17,9 @@ class UserCollection extends ResourceCollection
         return $this->collection->map->only(
             'id',
             'name',
-            'email',
-            'owner',
-            'photo',
-            'deleted_at',
-            'role_id'
+            'title',
+            'description',
+            'route_url'
         );
     }
 }
