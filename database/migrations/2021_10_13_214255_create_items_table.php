@@ -28,8 +28,7 @@ class CreateItemsTable extends Migration
             $table->integer('unit_of_measure_id')->nullable()->index('fk_items_units_of_measure1_idx');
             $table->integer('days_life')->nullable();
             $table->integer('min_days_life');
-            $table->text('item_comment');
-            $table->integer('cooldown_hours')->nullable();
+            $table->text('comment');
             $table->timestamps();
         });
     }

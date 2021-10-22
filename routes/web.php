@@ -18,9 +18,12 @@ use App\Http\Controllers\BlankController;
 use App\Models\Menu;
 use App\Models\Item;
 use App\Models\ProductionLine;
+use App\Rules\Barcode;
 use App\Services\Batch;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 
@@ -183,3 +186,18 @@ Route::get('/batch', \BatchController::class)->name('batch');
 Route::get('b2', function (Batch $batch) {
     return App::call([$batch, 'generate']);
 });
+
+
+Route::get(
+    '/valid',
+    function (Request $request) {
+        // $validated = $request->validate([
+        //     'barcode' => [new Barcode]
+        // ]);
+        // ddd($validated);}
+        $rules = ['barcode' => [new  Barcode]];
+        $validator = Validator::make($request->all(), $rules);
+        $validator->fails();
+        dd($validator->errors());
+    }
+);

@@ -23,6 +23,8 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
+        $productType = ProductType::inRandomOrder()->first();
+
         return [
             //id, 
             "active" => $this->faker->randomElement([0, 1]),
@@ -31,7 +33,7 @@ class ItemFactory extends Factory
             'quantity' => $this->faker->numberBetween(40, 175),
             'trade_unit_barcode' => $this->faker->ean13(),
             'consumer_unit_barcode' => 2 . $this->faker->ean13(),
-            'product_type_id' => ProductType::factory(),
+            'product_type_id' => $productType->id,
             'brand' => $this->faker->word(),
             'brand' => $this->faker->word(),
             'variant' => $this->faker->word(),
@@ -39,9 +41,7 @@ class ItemFactory extends Factory
             'unit_of_measure_id' => UnitsOfMeasure::factory(),
             'days_life' => $this->faker->randomElement([173, 274, 365, 730]),
             'min_days_life' => 90,
-            'item_comment' => $this->faker->paragraph(2),
-            'cooldown_hours' => $this->faker->randomElement([12, 48, 72]),
-
+            'comment' => $this->faker->paragraph(2),
             //
         ];
     }
