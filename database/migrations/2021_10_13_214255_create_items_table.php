@@ -14,7 +14,7 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->integer('id', true);
+            $table->increments('id', true);
             $table->boolean('active');
             $table->string('code', 10)->unique('code');
             $table->string('description', 32);
@@ -27,9 +27,10 @@ class CreateItemsTable extends Migration
             $table->integer('unit_net_contents')->nullable();
             $table->integer('unit_of_measure_id')->nullable()->index('fk_items_units_of_measure1_idx');
             $table->integer('days_life')->nullable();
-            $table->integer('min_days_life');
-            $table->text('comment');
+            $table->integer('min_days_life')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -12,7 +12,7 @@ export default ({
     <div className={className}>
       {label && (
         <label className="form-label" htmlFor={name}>
-          {label}:
+          {label}
         </label>
       )}
       <select

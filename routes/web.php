@@ -171,12 +171,18 @@ Route::get('/rl', function () {
     });
 });
 
-Route::get('data', 'BlankController@placeHolder')->name('data');
+Route::get('data', 'ItemsController@index')->name('data');
 
 
 Route::prefix('data')->name('data.')->group(
     function () {
-        Route::get('items', 'BlankController@placeHolder')->name('items');
+        Route::get('items/create', 'BlankController@placeHolder')->name('items.create');
+        Route::get('items/{item}/edit')->name('items.edit')->uses('ItemsController@edit')->middleware('auth');
+        Route::delete('items/{item}')->name('items.destroy')->uses('ItemsController@destroy')->middleware('auth');
+        Route::put('items/{item}/restore')->name('items.restore')->uses('ItemsController@restore')->middleware('auth');
+        Route::put('items/{item}')->name('items.update')->uses('ItemsController@update')->middleware('auth');
+        Route::get('items/create')->name('items.create')->uses('ItemsController@create')->middleware('auth');
+        Route::post('items/store')->name('items.store')->uses('ItemsController@store')->middleware('auth');
     }
 );
 

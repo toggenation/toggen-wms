@@ -35,7 +35,16 @@ class MenuSeeder extends Seeder
                 'name' => 'Product data',
                 'route_url' => 'data',
                 'icon' => 'faListAlt',
-                'active' => 1
+                'active' => 1,
+                'children' => [
+
+                    [
+                        'name' => "Create",
+                        'active' => 0,
+                        'route_url' => 'admin.items.create',
+                        'icon' => 'faPlus'
+                    ]
+                ]
 
             ],
             [

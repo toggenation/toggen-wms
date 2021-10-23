@@ -15,7 +15,7 @@ class CreateProductionInventoryItemsTable extends Migration
     {
         Schema::create('production_inventory_items', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('item_id')->nullable()->index('fk_inventory_items_items1_idx');
+            $table->unsignedInteger('item_id')->nullable()->index('fk_inventory_items_items1_idx');
             $table->integer('inventory_id')->nullable()->index('fk_inventory_items_inventory_idx');
             $table->integer('quantity')->nullable();
             $table->date('bb_date')->nullable();

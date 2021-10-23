@@ -5,6 +5,7 @@ import { InertiaLink, useForm, usePage } from '@inertiajs/inertia-react';
 import Icon from '@/Shared/Icon';
 import classNames from 'classnames';
 import { set } from 'lodash';
+import CheckBox from '@/Shared/Form/CheckBox';
 
 const LabelPrint = () => {
   const { batchNos, items, productionLines } = usePage().props;
@@ -68,11 +69,11 @@ const LabelPrint = () => {
   }
   const quantityList = Array(quantityMax).fill(1);
   const panelClasses =
-    'w-1/2 border border-gray-400 bg-gray-100 rounded-xl p-4';
+    'w-full md:w-1/2 border border-gray-400 bg-gray-100 rounded-xl p-4 mb-4';
   return (
     <div>
       <h1 className="mb-8 text-3xl font-bold">Pallet Label Print</h1>
-      <div className="flex space-x-4">
+      <div className="md:flex md:space-x-4">
         <div className={panelClasses}>
           <h4 className="mb-4 font-bold">Print</h4>
           <p>{data.quantityMax}</p>
@@ -117,19 +118,16 @@ const LabelPrint = () => {
               })}
           </SelectInput>
           <div className="flex">
-            <div className="mb-6 w-1/2">
-              <label className="inline-flex items-center">
-                <input
-                  onChange={e => {
-                    handlePartPalletChange('part_pallet', e.target.checked);
-                  }}
-                  checked={data.part_pallet}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Part pallet</span>
-              </label>
-            </div>
+            <CheckBox
+              divClasses="mb-6 w-1/2"
+              name="part_pallet"
+              checked={data.part_pallet}
+              label="Part Pallet"
+              onChange={e =>
+                handlePartPalletChange('part_pallet', e.target.checked)
+              }
+            />
+
             {data.part_pallet && (
               <SelectInput
                 className="w-1/2 pb-8"

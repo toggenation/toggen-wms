@@ -6,37 +6,37 @@ import SearchFilter from '@/Shared/SearchFilter';
 import Pagination from '@/Shared/Pagination';
 
 const Index = () => {
-  const { organizations } = usePage().props;
+  const { items } = usePage().props;
   const {
     data,
     meta: { links }
-  } = organizations;
+  } = items;
   return (
     <div>
-      <h1 className="mb-8 text-3xl font-bold">Organizations</h1>
+      <h1 className="mb-8 text-3xl font-bold">Items</h1>
       <div className="flex items-center justify-between mb-6">
         <SearchFilter />
         <InertiaLink
           className="btn-indigo focus:outline-none"
-          href={route('organizations.create')}
+          href={route('data.items.create')}
         >
           <span>Create</span>
-          <span className="hidden md:inline"> Organization</span>
+          <span className="hidden md:inline"> Item</span>
         </InertiaLink>
       </div>
       <div className="overflow-x-auto bg-white rounded shadow">
         <table className="w-full whitespace-nowrap">
           <thead>
             <tr className="font-bold text-left">
-              <th className="px-6 pt-5 pb-4">Name</th>
-              <th className="px-6 pt-5 pb-4">City</th>
+              <th className="px-6 pt-5 pb-4">Code</th>
+              <th className="px-6 pt-5 pb-4">Description</th>
               <th className="px-6 pt-5 pb-4" colSpan="2">
-                Phone
+                Quantity
               </th>
             </tr>
           </thead>
           <tbody>
-            {data.map(({ id, name, city, phone, deleted_at }) => {
+            {data.map(({ id, code, description, quantity, deleted_at }) => {
               return (
                 <tr
                   key={id}
@@ -44,10 +44,10 @@ const Index = () => {
                 >
                   <td className="border-t">
                     <InertiaLink
-                      href={route('organizations.edit', id)}
+                      href={route('data.items.edit', id)}
                       className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
                     >
-                      {name}
+                      {code}
                       {deleted_at && (
                         <Icon
                           name="trash"
@@ -59,25 +59,25 @@ const Index = () => {
                   <td className="border-t">
                     <InertiaLink
                       tabIndex="-1"
-                      href={route('organizations.edit', id)}
+                      href={route('data.items.edit', id)}
                       className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
                     >
-                      {city}
+                      {description}
                     </InertiaLink>
                   </td>
                   <td className="border-t">
                     <InertiaLink
                       tabIndex="-1"
-                      href={route('organizations.edit', id)}
+                      href={route('data.items.edit', id)}
                       className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
                     >
-                      {phone}
+                      {quantity}
                     </InertiaLink>
                   </td>
                   <td className="w-px border-t">
                     <InertiaLink
                       tabIndex="-1"
-                      href={route('organizations.edit', id)}
+                      href={route('data.items.edit', id)}
                       className="flex items-center px-4 focus:outline-none"
                     >
                       <Icon
@@ -92,7 +92,7 @@ const Index = () => {
             {data.length === 0 && (
               <tr>
                 <td className="px-6 py-4 border-t" colSpan="4">
-                  No organizations found.
+                  No items found.
                 </td>
               </tr>
             )}
@@ -104,6 +104,6 @@ const Index = () => {
   );
 };
 
-Index.layout = page => <Layout title="Organizations" children={page} />;
+Index.layout = page => <Layout title="Items" children={page} />;
 
 export default Index;

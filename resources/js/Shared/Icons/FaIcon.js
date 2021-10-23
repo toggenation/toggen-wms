@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faPlus,
   faWarehouse,
   faTags,
   faCog,
@@ -28,7 +29,8 @@ export default ({ name, className }) => {
     faTruck: faTruck,
     faListAlt: faListAlt,
     faCog: faCog,
-    faCogs: faCogs
+    faCogs: faCogs,
+    faPlus: faPlus
   }[name];
   return <FontAwesomeIcon icon={importedIcon} className={className} />;
 };

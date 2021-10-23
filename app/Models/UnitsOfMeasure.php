@@ -10,4 +10,9 @@ class UnitsOfMeasure extends Model
     use HasFactory;
 
     protected $table = 'units_of_measure';
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }
