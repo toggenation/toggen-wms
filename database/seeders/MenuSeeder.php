@@ -69,6 +69,14 @@ class MenuSeeder extends Seeder
                         'route_url' => 'admin.print-templates',
                         'active' => 1,
                         'icon' => 'faFileAlt'
+                    ],
+                    [
+                        'name' => 'Barcode',
+                        'title' => 'Check digit calculator',
+                        'route_url' => 'admin.barcode.checkdigit',
+                        'active' => 1,
+                        'icon' => 'faBarcode'
+
                     ]
                 ],
 

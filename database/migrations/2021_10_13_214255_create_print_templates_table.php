@@ -16,7 +16,7 @@ class CreatePrintTemplatesTable extends Migration
         Schema::create('print_templates', function (Blueprint $table) {
             $table->integer('id', true);
             $table->boolean('active')->nullable();
-            $table->string('name', 45)->unique('name');
+            $table->string('name', 45)->unique('print_template_name_uq');
             $table->string('description', 100)->nullable();
             $table->string('template_path')->nullable();
             $table->string('sample_image')->nullable();

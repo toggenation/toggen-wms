@@ -31,7 +31,7 @@ const Index = () => {
               <th className="px-6 pt-5 pb-4">Code</th>
               <th className="px-6 pt-5 pb-4">Description</th>
               <th className="px-6 pt-5 pb-4" colSpan="2">
-                Quantity
+                Boxes per pallet
               </th>
             </tr>
           </thead>

@@ -6,6 +6,7 @@ import Icon from '@/Shared/Icon';
 import classNames from 'classnames';
 import { set } from 'lodash';
 import CheckBox from '@/Shared/Form/CheckBox';
+import LoadingButton from '@/Shared/LoadingButton';
 
 const LabelPrint = () => {
   const { batchNos, items, productionLines } = usePage().props;
@@ -27,7 +28,10 @@ const LabelPrint = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    post(route('users.store'));
+
+    if (confirm('Are you sure want to send a print?')) {
+      post(route('users.store'));
+    }
   }
 
   function getCurrentQty(items, itemId) {
@@ -75,117 +79,119 @@ const LabelPrint = () => {
       <h1 className="mb-8 text-3xl font-bold">Pallet Label Print</h1>
       <div className="md:flex md:space-x-4">
         <div className={panelClasses}>
-          <h4 className="mb-4 font-bold">Print</h4>
-          <p>{data.quantityMax}</p>
-          <SelectInput
-            className="w-full pb-8"
-            label="Item"
-            name="item_id"
-            errors={errors.item_id}
-            value={data.item_id}
-            onChange={e => handleItemChange('item_id', e)}
-          >
-            <option key={0} value={null}>
-              (select)
-            </option>
-            {items &&
-              items.map(item => {
-                return (
-                  <option key={item.id} value={item.id}>
-                    {item.code_description}
-                  </option>
-                );
-              })}
-          </SelectInput>
-          <SelectInput
-            className="w-full pb-8"
-            label="Production line"
-            name="production_line_id"
-            errors={errors.production_line_id}
-            value={data.production_line_id}
-            onChange={e => setData('production_line_id', e.target.value)}
-          >
-            <option key={0} value={null}>
-              (select)
-            </option>
-            {productionLines &&
-              productionLines.map(productionLine => {
-                return (
-                  <option key={productionLine.id} value={productionLine.id}>
-                    {productionLine.name}
-                  </option>
-                );
-              })}
-          </SelectInput>
-          <div className="flex">
-            <CheckBox
-              divClasses="mb-6 w-1/2"
-              name="part_pallet"
-              checked={data.part_pallet}
-              label="Part Pallet"
-              onChange={e =>
-                handlePartPalletChange('part_pallet', e.target.checked)
-              }
-            />
-
-            {data.part_pallet && (
-              <SelectInput
-                className="w-1/2 pb-8"
-                label="Part pallet quantity"
-                name="quantity"
-                errors={errors.quantity}
-                value={data.quantity}
-                onChange={e =>
-                  setData('quantity', parseInt(e.target.value) || 0)
-                }
-              >
-                <option key={0} value={null}>
-                  (select)
-                </option>
-                {quantityList &&
-                  quantityList.map((quanityItem, idx) => {
-                    const number = idx + 1;
-                    return (
-                      <option key={number} value={number}>
-                        {number}
-                      </option>
-                    );
-                  })}
-              </SelectInput>
-            )}
-          </div>
-
-          <SelectInput
-            className="w-full pb-8"
-            label={`Batch no ${data.batch_no}`}
-            name="batch_no"
-            errors={errors.batch_no}
-            value={data.batch_no}
-            onChange={e => setData('batch_no', e.target.value)}
-          >
-            <option key={0} value={null}>
-              (select)
-            </option>
-            {batchNos &&
-              batchNos.map(batchNo => {
-                return (
-                  <option key={batchNo.batch} value={batchNo.batch}>
-                    {batchNo.description}
-                  </option>
-                );
-              })}
-          </SelectInput>
-
-          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-            <button
-              type="submit"
-              disabled={processing}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          <form onSubmit={handleSubmit}>
+            <h4 className="mb-4 font-bold">Print</h4>
+            <p>{data.quantityMax}</p>
+            <SelectInput
+              className="w-full pb-8"
+              label="Item"
+              name="item_id"
+              errors={errors.item_id}
+              value={data.item_id}
+              onChange={e => handleItemChange('item_id', e)}
             >
-              <Icon name="printer" className={iconClasses} />
-              Print...
-            </button>
-          </div>
+              <option key={0} value={null}>
+                (select)
+              </option>
+              {items &&
+                items.map(item => {
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.code_description}
+                    </option>
+                  );
+                })}
+            </SelectInput>
+            <SelectInput
+              className="w-full pb-8"
+              label="Production line"
+              name="production_line_id"
+              errors={errors.production_line_id}
+              value={data.production_line_id}
+              onChange={e => setData('production_line_id', e.target.value)}
+            >
+              <option key={0} value={null}>
+                (select)
+              </option>
+              {productionLines &&
+                productionLines.map(productionLine => {
+                  return (
+                    <option key={productionLine.id} value={productionLine.id}>
+                      {productionLine.name}
+                    </option>
+                  );
+                })}
+            </SelectInput>
+            <div className="flex">
+              <CheckBox
+                divClasses="mb-6 w-1/2"
+                name="part_pallet"
+                checked={data.part_pallet}
+                label="Part Pallet"
+                onChange={e =>
+                  handlePartPalletChange('part_pallet', e.target.checked)
+                }
+              />
+
+              {data.part_pallet && (
+                <SelectInput
+                  className="w-1/2 pb-8"
+                  label="Part pallet quantity"
+                  name="quantity"
+                  errors={errors.quantity}
+                  value={data.quantity}
+                  onChange={e =>
+                    setData('quantity', parseInt(e.target.value) || 0)
+                  }
+                >
+                  <option key={0} value={null}>
+                    (select)
+                  </option>
+                  {quantityList &&
+                    quantityList.map((quanityItem, idx) => {
+                      const number = idx + 1;
+                      return (
+                        <option key={number} value={number}>
+                          {number}
+                        </option>
+                      );
+                    })}
+                </SelectInput>
+              )}
+            </div>
+
+            <SelectInput
+              className="w-full pb-8"
+              label={`Batch no ${data.batch_no}`}
+              name="batch_no"
+              errors={errors.batch_no}
+              value={data.batch_no}
+              onChange={e => setData('batch_no', e.target.value)}
+            >
+              <option key={0} value={null}>
+                (select)
+              </option>
+              {batchNos &&
+                batchNos.map(batchNo => {
+                  return (
+                    <option key={batchNo.batch} value={batchNo.batch}>
+                      {batchNo.description}
+                    </option>
+                  );
+                })}
+            </SelectInput>
+
+            <div className="">
+              <LoadingButton
+                loading={processing}
+                type="submit"
+                className="ml-auto btn-indigo"
+              >
+                <Icon name="printer" className={iconClasses} />
+                Print...{' '}
+              </LoadingButton>
+            </div>
+          </form>
         </div>
         <div className={panelClasses}>
           <h4>Label 2</h4>

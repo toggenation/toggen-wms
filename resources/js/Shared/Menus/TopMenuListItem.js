@@ -4,6 +4,15 @@ import { Link } from '@inertiajs/inertia-react';
 import { usePage } from '@inertiajs/inertia-react';
 import Icon from '@/Shared/Icon';
 const TopMenuListItem = props => {
+  let linkRoute = '';
+
+  try {
+    linkRoute = route(props.route);
+  } catch (error) {
+    // console.log(error);
+    linkRoute = route('admin.bad.route') + `?route=${props.route}`;
+  }
+
   const classes = classNames({
     flex: true,
     'text-gray-400 cursor-not-allowed': props.disabled,
@@ -25,7 +34,7 @@ const TopMenuListItem = props => {
       <Link
         disabled={props.disabled}
         className={classes}
-        href={route(props.route)}
+        href={linkRoute}
         title={props.title}
       >
         <Icon name={props.icon} className={iconClasses} />

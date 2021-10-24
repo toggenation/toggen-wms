@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Role;
 use Inertia\Testing\Assert;
 
 class UsersTest extends TestCase
@@ -21,13 +22,16 @@ class UsersTest extends TestCase
             'first_name' => 'John',
             'last_name' => 'Doe',
             'email' => 'johndoe@example.com',
-            'owner' => true,
+            'owner' => true
         ]);
     }
 
     public function test_can_view_users()
     {
-        User::factory()->count(5)->create(['account_id' => 1]);
+        $role = Role::factory()->create(['name' => "Test Role"])->id;
+
+
+        User::factory()->count(5)->create(['account_id' => 1, 'role_id' => $role]);
 
         $this->actingAs($this->user)
             ->get('/users')
@@ -35,7 +39,7 @@ class UsersTest extends TestCase
             ->assertInertia(function (Assert $page) {
                 $page->component('Users/Index');
                 $page->has('users.data', 5, function (Assert $page) {
-                    $page->hasAll(['id', 'name', 'email', 'owner', 'photo', 'deleted_at']);
+                    $page->hasAll(['id', 'name', 'email', 'owner', 'photo', 'deleted_at', 'role_id']);
                 });
             });
     }

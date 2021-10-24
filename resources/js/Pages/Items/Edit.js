@@ -66,154 +66,158 @@ const Edit = () => {
           This item has been deleted.
         </TrashedMessage>
       )}
-      <div className="max-w-3xl overflow-hidden bg-white rounded shadow">
+      <div className="max-w-5xl p-4 bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-wrap p-8 -mb-8 -mr-6">
-            <CheckBox
-              divClasses="mb-6 w-1/2"
-              name="active"
-              checked={data.active}
-              label="Active"
-              onChange={e => setData('active', e.target.checked)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Code"
-              name="code"
-              errors={errors.code}
-              value={data.code}
-              onChange={e => setData('code', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Description"
-              name="description"
-              type="text"
-              errors={errors.description}
-              value={data.description}
-              onChange={e => setData('description', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Quantity"
-              name="quantity"
-              type="text"
-              errors={errors.quantity}
-              value={data.quantity}
-              onChange={e => setData('quantity', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Trade Unit Barcode"
-              name="trade_unit_barcode"
-              type="text"
-              errors={errors.trade_unit_barcode}
-              value={data.trade_unit_barcode}
-              onChange={e => setData('trade_unit_barcode', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Consumer Unit Barcode"
-              name="consumer_unit_barcode"
-              type="text"
-              errors={errors.consumer_unit_barcode}
-              value={data.consumer_unit_barcode}
-              onChange={e => setData('consumer_unit_barcode', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Unit net contents"
-              name="unit_net_contents"
-              type="text"
-              errors={errors.unit_net_contents}
-              value={data.unit_net_contents}
-              onChange={e => setData('unit_net_contents', e.target.value)}
-            />
-            <SelectInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Product Type"
-              name="product_type_id"
-              errors={errors.product_type_id}
-              value={data.product_type_id}
-              onChange={e => setData('product_type_id', e.target.value)}
-            >
-              <option key={0} value=""></option>
-              {product_types &&
-                product_types.map(productType => {
-                  return (
-                    <option key={productType.id} value={productType.id}>
-                      {productType.name}
-                    </option>
-                  );
-                })}
-            </SelectInput>
+          <div className="flex mb-8">
+            <div class="w-1/3 bg-transparent">
+              <CheckBox
+                divClasses="mb-6 w-1/2"
+                name="active"
+                checked={data.active}
+                label="Active"
+                onChange={e => setData('active', e.target.checked)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Code"
+                name="code"
+                errors={errors.code}
+                value={data.code}
+                onChange={e => setData('code', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Description"
+                name="description"
+                type="text"
+                errors={errors.description}
+                value={data.description}
+                onChange={e => setData('description', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Boxes per pallet"
+                name="quantity"
+                type="text"
+                errors={errors.quantity}
+                value={data.quantity}
+                onChange={e => setData('quantity', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Trade Unit Barcode"
+                name="trade_unit_barcode"
+                type="text"
+                errors={errors.trade_unit_barcode}
+                value={data.trade_unit_barcode}
+                onChange={e => setData('trade_unit_barcode', e.target.value)}
+              />
+            </div>
+            <div class="w-1/3">
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Consumer Unit Barcode"
+                name="consumer_unit_barcode"
+                type="text"
+                errors={errors.consumer_unit_barcode}
+                value={data.consumer_unit_barcode}
+                onChange={e => setData('consumer_unit_barcode', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Unit net contents"
+                name="unit_net_contents"
+                type="text"
+                errors={errors.unit_net_contents}
+                value={data.unit_net_contents}
+                onChange={e => setData('unit_net_contents', e.target.value)}
+              />
+              <SelectInput
+                className="w-full pb-8 pr-6"
+                label="Product Type"
+                name="product_type_id"
+                errors={errors.product_type_id}
+                value={data.product_type_id}
+                onChange={e => setData('product_type_id', e.target.value)}
+              >
+                <option key={0} value=""></option>
+                {product_types &&
+                  product_types.map(productType => {
+                    return (
+                      <option key={productType.id} value={productType.id}>
+                        {productType.name}
+                      </option>
+                    );
+                  })}
+              </SelectInput>
 
-            <SelectInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Unit of measure"
-              name="unit_of_measure_id"
-              errors={errors.unit_of_measure_id}
-              value={data.unit_of_measure_id}
-              onChange={e => setData('unit_of_measure_id', e.target.value)}
-            >
-              <option key={0} value=""></option>
-              {units_of_measure &&
-                units_of_measure.map(uom => {
-                  return (
-                    <option key={uom.id} value={uom.id}>
-                      {uom.name}
-                    </option>
-                  );
-                })}
-            </SelectInput>
+              <SelectInput
+                className="w-full pb-8 pr-6"
+                label="Unit of measure"
+                name="unit_of_measure_id"
+                errors={errors.unit_of_measure_id}
+                value={data.unit_of_measure_id}
+                onChange={e => setData('unit_of_measure_id', e.target.value)}
+              >
+                <option key={0} value=""></option>
+                {units_of_measure &&
+                  units_of_measure.map(uom => {
+                    return (
+                      <option key={uom.id} value={uom.id}>
+                        {uom.name}
+                      </option>
+                    );
+                  })}
+              </SelectInput>
+            </div>
+            <div class="w-1/3">
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Brand"
+                name="brand"
+                type="text"
+                errors={errors.brand}
+                value={data.brand}
+                onChange={e => setData('brand', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Variant"
+                name="variant"
+                type="text"
+                errors={errors.variant}
+                value={data.variant}
+                onChange={e => setData('variant', e.target.value)}
+              />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Days life"
+                name="days_life"
+                type="text"
+                errors={errors.days_life}
+                value={data.days_life}
+                onChange={e => setData('days_life', e.target.value)}
+              />
 
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Brand"
-              name="brand"
-              type="text"
-              errors={errors.brand}
-              value={data.brand}
-              onChange={e => setData('brand', e.target.value)}
-            />
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Min days life"
+                name="min_days_life"
+                type="text"
+                errors={errors.min_days_life}
+                value={data.min_days_life}
+                onChange={e => setData('min_days_life', e.target.value)}
+              />
 
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Variant"
-              name="variant"
-              type="text"
-              errors={errors.variant}
-              value={data.variant}
-              onChange={e => setData('variant', e.target.value)}
-            />
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Days life"
-              name="days_life"
-              type="text"
-              errors={errors.days_life}
-              value={data.days_life}
-              onChange={e => setData('days_life', e.target.value)}
-            />
-
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Min days life"
-              name="min_days_life"
-              type="text"
-              errors={errors.min_days_life}
-              value={data.min_days_life}
-              onChange={e => setData('min_days_life', e.target.value)}
-            />
-
-            <TextAreaInput
-              name="comment"
-              errors={errors.comment}
-              value={data.comment}
-              onChange={e => setData('comment', e.target.value)}
-              label="Item comment"
-              placeholder="Please enter a comment"
-            />
+              <TextAreaInput
+                name="comment"
+                errors={errors.comment}
+                value={data.comment}
+                onChange={e => setData('comment', e.target.value)}
+                label="Item comment"
+                placeholder="Please enter a comment"
+              />
+            </div>
           </div>
           <div className="flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
             {!item.deleted_at && (

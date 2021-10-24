@@ -118,6 +118,9 @@ Route::get('admin', 'BlankController@placeHolder')->name('admin');
 
 Route::prefix('admin')->name('admin.')->group(
     function () {
+        Route::get('badroute', function () {
+            return Inertia::render('Admin/BadRoute');
+        })->name('bad.route');
         Route::get('menus')->name('menus')->uses('MenusController@index')->middleware('remember', 'auth');
         Route::get('menus/create')->name('menus.create')->uses('MenusController@create')->middleware('auth');
         Route::post('menus')->name('menus.store')->uses('MenusController@store')->middleware('auth');

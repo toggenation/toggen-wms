@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'password' => 'secret',
             'remember_token' => Str::random(10),
             'owner' => false,
+            'role_id' => 1
         ];
     }
 }

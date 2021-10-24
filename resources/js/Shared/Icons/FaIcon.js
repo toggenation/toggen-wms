@@ -12,25 +12,30 @@ import {
   faFileAlt,
   faCalendarDay,
   faChartLine,
-  faPallet
+  faPallet,
+  faExclamation,
+  faBarcode
 } from '@fortawesome/free-solid-svg-icons';
 
 import PalletLabelIcon from '@/Shared/PalletLabelIcon';
 
 export default ({ name, className }) => {
-  const importedIcon = {
-    faPallet: faPallet,
-    faChartLine: faChartLine,
-    faWarehouse: faWarehouse,
-    faCalendarDay: faCalendarDay,
-    faFileAlt: faFileAlt,
-    faTags: faTags,
-    faTable: faTable,
-    faTruck: faTruck,
-    faListAlt: faListAlt,
-    faCog: faCog,
-    faCogs: faCogs,
-    faPlus: faPlus
-  }[name];
+  const importedIcon =
+    {
+      faBarcode,
+      faPallet,
+      faChartLine,
+      faWarehouse,
+      faCalendarDay,
+      faFileAlt,
+      faTags,
+      faTable,
+      faTruck,
+      faListAlt,
+      faCog,
+      faCogs,
+      faPlus
+    }[name] || faExclamation;
+
   return <FontAwesomeIcon icon={importedIcon} className={className} />;
 };
