@@ -196,6 +196,9 @@ Route::get('b2', function (Batch $batch) {
     return App::call([$batch, 'generate']);
 });
 
+Route::get('temp', fn () => Menu::where('active', '=', 1)->where('parent_id', null)->with(['children' => function ($q) {
+    $q->where('active', 1);
+}])->get());
 
 Route::get(
     '/valid',

@@ -2,23 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidBarcodeException;
+use App\Rules\Barcode as BarcodeRule;
+use Tests\Feature\BarcodeTest;
+
 class Barcode
 {
-
-    /**
-     * Generate an SSCC number with check digit
-     *
-     * @return string
-     *
-     * phpcs:disable Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps
-     */
-    public function generateSSCCWithCheckDigit()
-    {
-        $sscc = $this->generateSSCC();
-
-        return $sscc . $this->generateCheckDigit($sscc);
-    }
-
     /**
      * when fed a barcode number returns the GS1 checkdigit number
      * @param string $number barcode number
@@ -52,15 +41,40 @@ class Barcode
         return $cd;
     }
 
+    private function validate($extensionDigit, $companyPrefix, $serialReference)
+    {
+        // serialReference must be greater than zero and a number
+        if (!is_numeric($serialReference) || $serialReference < 1) {
+            throw InvalidBarcodeException::invalidSerialNumber();
+        }
+
+        if (preg_match('/^\d$/', $extensionDigit) !== 1) {
+            throw InvalidBarcodeException::invalidExtensionDigit();
+        }
+
+        $coPrefixLength = strlen($companyPrefix);
+
+        // coPrefix is between 6 and 
+        if ($coPrefixLength < 6 || $coPrefixLength > 11) {
+            throw InvalidBarcodeException::invalidCompanyPrefix();
+        }
+    }
 
 
     public function generateSSCC($extensionDigit, $companyPrefix, $serialReference)
     {
-        $barcode = $extensionDigit . $companyPrefix . $serialReference;
-        if (strlen($barcode) !== 17) {
-            throw new \Exception('SSCC Barcode without checkdigit should be 17 digits long');
-        }
+        $this->validate($extensionDigit, $companyPrefix, $serialReference);
 
-        return $barcode . $this->checkDigit($barcode);
+        $barcode = $extensionDigit . $companyPrefix;
+
+        $serialLength = 17 - strlen($barcode);
+
+        $format = '%0' . $serialLength . 'd';
+
+        $barcode .= sprintf($format, $serialReference);
+
+        $barcode = $barcode . $this->checkDigit($barcode);
+
+        return $barcode;
     }
 }

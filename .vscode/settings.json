@@ -1,5 +1,6 @@
 {
   "files.associations": {
     "**/resources/js/**/*.js": "javascriptreact"
-  }
+  },
+  "php.validate.enable": false
 }
