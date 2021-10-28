@@ -8,9 +8,7 @@ export const resolveRoute = name => {
   let link = '';
 
   try {
-    console.log('intryroute', route(name));
     link = route(name);
-    console.log('intry', link);
   } catch (error) {
     link = route('admin.bad.route') + `?route=${name}`;
   }

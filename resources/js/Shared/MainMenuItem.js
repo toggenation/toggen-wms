@@ -7,8 +7,7 @@ import { resolveRoute } from './util';
 export default ({ icon, link, text }) => {
   const { linkRoute, external } = resolveRoute(link);
 
-  console.log('lr', external, linkRoute, route().current());
-  const isActive = route().current(linkRoute + '*');
+  const isActive = route().current(link + '*');
 
   const iconClasses = classNames('w-4 h-4 mr-2', {
     'text-white fill-current': isActive,
