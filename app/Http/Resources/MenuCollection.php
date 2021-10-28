@@ -19,7 +19,8 @@ class MenuCollection extends ResourceCollection
             'name',
             'title',
             'description',
-            'route_url'
+            'route_url',
+            'depth'
         );
     }
 }

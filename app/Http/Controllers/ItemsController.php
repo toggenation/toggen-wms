@@ -28,7 +28,7 @@ class ItemsController extends Controller
             'items' =>  new ItemCollection(
                 Item::orderBy('code')
                     ->filter(Request::only('search', 'trashed'))
-                    ->paginate(5)
+                    ->paginate()
                     ->appends(Request::all())
             )
             // 'organizations' => new OrganizationCollection(

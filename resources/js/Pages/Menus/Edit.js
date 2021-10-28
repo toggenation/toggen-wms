@@ -8,20 +8,16 @@ import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import TrashedMessage from '@/Shared/TrashedMessage';
-import Icon from '@/Shared/Icon';
+import CheckBox from '@/Shared/Form/CheckBox';
 
 const Edit = () => {
   const { menu, root_menus } = usePage().props;
   const { data, setData, errors, put, processing } = useForm({
+    active: menu.active,
     name: menu.name || '',
     route_url: menu.route_url || '',
     parent_id: menu.parent_id || '',
-    phone: menu.phone || '',
-    address: menu.address || '',
-    city: menu.city || '',
-    region: menu.region || '',
-    country: menu.country || '',
-    postal_code: menu.postal_code || ''
+    icon: menu.icon || ''
   });
 
   function handleSubmit(e) {
@@ -62,6 +58,13 @@ const Edit = () => {
       <div className="max-w-3xl overflow-hidden bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-wrap p-8 -mb-8 -mr-6">
+            <CheckBox
+              divClasses="mb-6 w-1/2"
+              name="active"
+              checked={data.active}
+              label="Active"
+              onChange={e => setData('active', e.target.checked)}
+            />
             <TextInput
               className="w-full pb-8 pr-6 lg:w-1/2"
               label="Name"
@@ -87,7 +90,7 @@ const Edit = () => {
               value={data.parent_id}
               onChange={e => setData('parent_id', e.target.value)}
             >
-              <option key={0} value={null}>
+              <option key={0} value="">
                 (Is root)
               </option>
               {root_menus &&
@@ -99,6 +102,15 @@ const Edit = () => {
                   );
                 })}
             </SelectInput>
+            <TextInput
+              className="w-full pb-8 pr-6 lg:w-1/2"
+              label="Icon"
+              name="icon"
+              type="text"
+              errors={errors.icon}
+              value={data.icon}
+              onChange={e => setData('icon', e.target.value)}
+            />
           </div>
           <div className="flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
             {!menu.deleted_at && (

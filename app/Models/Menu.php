@@ -10,4 +10,5 @@ class Menu extends Model
 {
     use HasFactory;
     use NodeTrait;
+    protected $guarded = [];
 }

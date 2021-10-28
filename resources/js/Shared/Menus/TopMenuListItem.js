@@ -3,42 +3,52 @@ import classNames from 'classnames';
 import { Link } from '@inertiajs/inertia-react';
 import { usePage } from '@inertiajs/inertia-react';
 import Icon from '@/Shared/Icon';
-const TopMenuListItem = props => {
-  let linkRoute = '';
-
-  try {
-    linkRoute = route(props.route);
-  } catch (error) {
-    // console.log(error);
-    linkRoute = route('admin.bad.route') + `?route=${props.route}`;
-  }
-
-  const classes = classNames({
+import { resolveRoute } from '../util';
+const TopMenuListItem = ({
+  disabled,
+  isActive,
+  route_url,
+  text,
+  title,
+  icon
+}) => {
+  const { external, linkRoute } = resolveRoute(route_url);
+  const textClasses = classNames({
     flex: true,
-    'text-gray-400 cursor-not-allowed': props.disabled,
-    'text-indigo-300 hover:text-indigo-700': !props.isActive && !props.disabled,
-    'text-black hover:text-indigo-800': props.isActive
+    'text-gray-400 cursor-not-allowed': disabled,
+    'text-indigo-300 hover:text-indigo-700': !isActive && !disabled,
+    'text-black hover:text-indigo-800': isActive
   });
-  const { isActive } = props;
   const iconClasses = classNames('w-4 h-4 mr-2', {
     'text-black fill-current': isActive,
     'text-indigo-400 group-hover:text-white fill-current': !isActive
   });
 
-  if (props.disabled) {
-    return <span className={classes}>{props.text}</span>;
+  if (disabled) {
+    return <span className={textClasses}>{text}</span>;
+  }
+
+  if (external) {
+    return (
+      <li className="flex mr-6">
+        <a target="_blank" className={textClasses} href={linkRoute}>
+          <Icon name={icon} className={iconClasses} />
+          {text}
+        </a>
+      </li>
+    );
   }
 
   return (
     <li className="flex mr-6">
       <Link
-        disabled={props.disabled}
-        className={classes}
+        disabled={disabled}
+        className={textClasses}
         href={linkRoute}
-        title={props.title}
+        title={title}
       >
-        <Icon name={props.icon} className={iconClasses} />
-        {props.text}
+        <Icon name={icon} className={iconClasses} />
+        {text}
       </Link>
     </li>
   );

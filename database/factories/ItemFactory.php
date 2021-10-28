@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Item;
 use App\Models\ProductType;
 use App\Models\UnitsOfMeasure;
+use App\Services\Barcode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemFactory extends Factory
@@ -24,6 +25,9 @@ class ItemFactory extends Factory
     public function definition()
     {
         $productType = ProductType::inRandomOrder()->first();
+        $ean13 =  $this->faker->ean13();
+        $ean14 = "1" . substr($ean13, 0, 12);
+        $ean14 .= (new Barcode)->checkDigit($ean14);
 
         return [
             //id, 
@@ -31,8 +35,8 @@ class ItemFactory extends Factory
             "code" => $this->faker->numerify('######'),
             'description' => $this->faker->words(3, true),
             'quantity' => $this->faker->numberBetween(40, 175),
-            'trade_unit_barcode' => $this->faker->ean13(),
-            'consumer_unit_barcode' => 2 . $this->faker->ean13(),
+            'trade_unit_barcode' =>   $ean14,
+            'consumer_unit_barcode' => $ean13,
             'product_type_id' => $productType->id,
             'brand' => $this->faker->word(),
             'brand' => $this->faker->word(),

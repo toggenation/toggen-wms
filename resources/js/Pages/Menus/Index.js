@@ -1,4 +1,5 @@
 import React from 'react';
+import { Inertia } from '@inertiajs/inertia';
 import { InertiaLink, usePage } from '@inertiajs/inertia-react';
 import Layout from '@/Shared/Layout';
 import Icon from '@/Shared/Icon';
@@ -11,6 +12,28 @@ const Index = () => {
     data,
     meta: { links }
   } = menus;
+
+  function moveUp(event, id) {
+    event.preventDefault();
+    if (confirm('Are you sure you want to move this menu up?')) {
+      Inertia.put(route('admin.menus.up', id));
+    }
+  }
+
+  function moveDown(event, id) {
+    event.preventDefault();
+    if (confirm('Are you sure you want to move this menu down?')) {
+      Inertia.put(route('admin.menus.down', id));
+    }
+  }
+
+  function makeParent(event, id) {
+    event.preventDefault();
+    if (confirm('Are you sure you want to make this a top level menu')) {
+      Inertia.put(route('admin.menus.parent', id));
+    }
+  }
+
   return (
     <div>
       <h1 className="mb-8 text-3xl font-bold">Menus</h1>
@@ -30,10 +53,13 @@ const Index = () => {
             <tr className="font-bold text-left">
               <th className="px-6 pt-5 pb-4">Name</th>
               <th className="px-6 pt-5 pb-4">Route</th>
+              <th className="px-6 pt-5 pb-4">Actions</th>
+              <th className="px-6 pt-5 pb-4"></th>
             </tr>
           </thead>
           <tbody>
-            {data.map(({ id, name, route_url, phone, deleted_at }) => {
+            {data.map(({ id, name, route_url, depth, deleted_at }) => {
+              const child = depth > 0 ? <div className="ml-8" /> : null;
               return (
                 <tr
                   key={id}
@@ -44,7 +70,7 @@ const Index = () => {
                       href={route('admin.menus.edit', id)}
                       className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
                     >
-                      {name}
+                      {child} {name}
                       {deleted_at && (
                         <Icon
                           name="trash"
@@ -61,6 +87,28 @@ const Index = () => {
                     >
                       {route_url}
                     </InertiaLink>
+                  </td>
+                  <td className="w-px border-t">
+                    <a href="#" onClick={e => moveUp(e, id)}>
+                      <Icon
+                        name="faArrowUp"
+                        className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
+                      />
+                    </a>{' '}
+                    <a href="#" onClick={e => moveDown(e, id)}>
+                      <Icon
+                        name="faArrowDown"
+                        className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
+                      />
+                    </a>{' '}
+                    {depth > 0 && (
+                      <a href="#" onClick={e => makeParent(e, id)}>
+                        <Icon
+                          name="faArrowLeft"
+                          className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
+                        />
+                      </a>
+                    )}
                   </td>
                   <td className="w-px border-t">
                     <InertiaLink

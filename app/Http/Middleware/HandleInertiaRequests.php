@@ -41,7 +41,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'app_menus' => function () {
-                return ['menus' => Menu::where('active', '=', 1)->withDepth()->get()->toTree()];
+                return ['menus' => Menu::orderBy('_lft', 'ASC')->where('active', '=', 1)->withDepth()->get()->toTree()];
             },
             // 'foo' => 'bar',
             'auth' => function () {

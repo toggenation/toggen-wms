@@ -73,7 +73,7 @@ class MenuSeeder extends Seeder
                     [
                         'name' => 'Barcode',
                         'title' => 'Check digit calculator',
-                        'route_url' => 'admin.barcode.checkdigit',
+                        'route_url' => 'barcode',
                         'active' => 1,
                         'icon' => 'faBarcode'
 

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Inertia } from '@inertiajs/inertia';
-import { InertiaLink, useForm } from '@inertiajs/inertia-react';
+import { InertiaLink, useForm, usePage } from '@inertiajs/inertia-react';
 import Layout from '@/Shared/Layout';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 
 const Create = () => {
+  const { routes } = usePage().props;
   const { data, setData, errors, post, processing } = useForm({
     name: '',
     active: true,
@@ -89,7 +90,7 @@ const Create = () => {
               value={data.region}
               onChange={e => setData('region', e.target.value)}
             />
-            <SelectInput
+            {/* <SelectInput
               className="w-full pb-8 pr-6 lg:w-1/2"
               label="Role"
               name="role_id"
@@ -105,7 +106,7 @@ const Create = () => {
                     </option>
                   );
                 })}
-            </SelectInput>
+            </SelectInput> */}
 
             <TextInput
               className="w-full pb-8 pr-6 lg:w-1/2"

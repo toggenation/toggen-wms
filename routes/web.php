@@ -126,6 +126,10 @@ Route::prefix('admin')->name('admin.')->group(
         Route::post('menus')->name('menus.store')->uses('MenusController@store')->middleware('auth');
         Route::get('menus/{menu}/edit')->name('menus.edit')->uses('MenusController@edit')->middleware('auth');
         Route::put('menus/{menu}')->name('menus.update')->uses('MenusController@update')->middleware('auth');
+        Route::put('menus/{menu}/up')->name('menus.up')->uses('MenusController@moveUp')->middleware('auth');
+        Route::put('menus/{menu}/down')->name('menus.down')->uses('MenusController@moveDown')->middleware('auth');
+        Route::put('menus/{menu}/parent')->name('menus.parent')->uses('MenusController@makeRoot')->middleware('auth');
+        Route::put('menus/{menu}/child')->name('menus.child')->uses('MenusController@makeChild')->middleware('auth');
         Route::delete('menus/{menu}')->name('menus.destroy')->uses('MenusController@destroy')->middleware('auth');
         Route::put('menus/{menu}/restore')->name('menus.restore')->uses('MenusController@restore')->middleware('auth');
         Route::get('printers', 'BlankController@placeHolder')->name('printers');
@@ -168,7 +172,7 @@ Route::prefix('print')->name('print.')->group(
 // route list
 Route::get('/rl', function () {
 
-    ddd(Route::getRoutes());
+    ddd(array_keys(Route::getRoutes()->getRoutesByName()));
     return Route::getRoutes()->map(function ($route) {
         return $route->getPath();
     });
@@ -199,6 +203,13 @@ Route::get('b2', function (Batch $batch) {
 Route::get('temp', fn () => Menu::where('active', '=', 1)->where('parent_id', null)->with(['children' => function ($q) {
     $q->where('active', 1);
 }])->get());
+
+
+Route::get("barcode", function () {
+    return Inertia::render('Barcode/CheckDigit');
+})->name('barcode');
+
+Route::post('barcode', 'BarcodeController@calc')->name('barcode.calc');
 
 Route::get(
     '/valid',

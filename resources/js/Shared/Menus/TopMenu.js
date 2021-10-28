@@ -22,7 +22,7 @@ export default props => {
           const attributes = {
             text: data.name,
             title: data.description || '',
-            route: data.route_url,
+            route_url: data.route_url,
             icon: data.icon,
             isActive: data.route_url === route().current()
           };
