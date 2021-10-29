@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { InertiaLink, useForm, usePage } from '@inertiajs/inertia-react';
 import Layout from '@/Shared/Layout';
@@ -9,16 +9,21 @@ import TextAreaInput from '@/Shared/Form/TextAreaInput';
 import CheckBox from '@/Shared/Form/CheckBox';
 
 const CheckDigit = props => {
-  const { barcode, length } = usePage().props;
+  const { barcode } = usePage().props;
 
   const { data, setData, errors, post, processing } = useForm({
     barcode: ''
   });
 
+
   const handleSubmit = e => {
     e.preventDefault();
     post(route('barcode.calc'));
   };
+
+  const handleUpdate = e => {
+    setData('barcode', e.target.value)
+  }
 
   return (
     <div>
@@ -33,7 +38,7 @@ const CheckDigit = props => {
                 name="barcode"
                 errors={errors.barcode}
                 value={data.barcode}
-                onChange={e => setData('barcode', e.target.value)}
+                onChange={e => handleUpdate(e)}
               />
               <div className="pb-4 text-xs">{data.barcode.length}</div>
             </div>
@@ -43,7 +48,7 @@ const CheckDigit = props => {
                 style={{ height: '42px' }}
                 className="mt-2 border leading-normal border-gray-300 p-2 rounded mr-4"
               >
-                {length}
+                {barcode && barcode.length}
               </div>
             </div>
             <div className="mb-6 lg:w-1/3 block">

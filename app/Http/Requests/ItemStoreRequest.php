@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\Barcode;
+use App\Rules\BarcodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ItemStoreRequest extends FormRequest

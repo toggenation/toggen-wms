@@ -69,7 +69,7 @@ const Edit = () => {
       <div className="max-w-5xl p-4 bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
           <div className="flex mb-8">
-            <div class="w-1/3 bg-transparent">
+            <div className="w-1/3 bg-transparent">
               <CheckBox
                 divClasses="mb-6 w-1/2"
                 name="active"
@@ -113,7 +113,7 @@ const Edit = () => {
                 onChange={e => setData('trade_unit_barcode', e.target.value)}
               />
             </div>
-            <div class="w-1/3">
+            <div className="w-1/3">
               <TextInput
                 className="w-full pb-8 pr-6"
                 label="Consumer Unit Barcode"
@@ -170,7 +170,7 @@ const Edit = () => {
                   })}
               </SelectInput>
             </div>
-            <div class="w-1/3">
+            <div className="w-1/3">
               <TextInput
                 className="w-full pb-8 pr-6"
                 label="Brand"

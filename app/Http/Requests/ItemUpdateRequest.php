@@ -2,11 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\Barcode;
+use App\Rules\BarcodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ItemUpdateRequest extends FormRequest
 {
+
+    public function __construct(BarcodeRule $barcodeRule)
+    {
+        $this->barcodeRule = $barcodeRule;
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,8 +33,8 @@ class ItemUpdateRequest extends FormRequest
             'active' => ['required'],
             'code' => ['required', 'max:100'],
             'description' => ['required', 'max:32'],
-            'trade_unit_barcode' => [new Barcode],
-            'consumer_unit_barcode' => ['nullable', new Barcode],
+            'trade_unit_barcode' => [$this->barcodeRule],
+            'consumer_unit_barcode' => ['nullable', $this->barcodeRule],
             'quantity' => ['required', 'max:10000', 'integer'],
             'city' => ['nullable', 'max:50'],
             'unit_net_contents' => ['required', 'numeric', 'max:10000'],
@@ -38,10 +43,8 @@ class ItemUpdateRequest extends FormRequest
             'product_type_id' => ['required', 'exists:product_types,id'],
             'unit_of_measure_id' => ['nullable', 'exists:units_of_measure,id'],
             'comment' => ['nullable'],
-
             'min_days_life' => ['nullable'],
             'days_life' => ['nullable']
-
         ];
     }
 }

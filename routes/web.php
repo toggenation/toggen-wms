@@ -18,7 +18,7 @@ use App\Http\Controllers\BlankController;
 use App\Models\Menu;
 use App\Models\Item;
 use App\Models\ProductionLine;
-use App\Rules\Barcode;
+use App\Rules\BarcodeRule;
 use App\Services\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
