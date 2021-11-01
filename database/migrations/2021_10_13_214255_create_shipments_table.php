@@ -19,7 +19,7 @@ class CreateShipmentsTable extends Migration
             $table->string('shipment_number', 30);
             $table->string('consignment_note', 50);
             $table->integer('address_id')->index('fk_shipments_addresses1_idx');
-            $table->integer('inventory_id')->nullable()->index('fk_shipments_inventory1_idx');
+            $table->integer('pallet_id')->nullable()->index('fk_shipments_inventory1_idx');
             $table->integer('pallet_count');
             $table->boolean('shipped');
             $table->timestamps();

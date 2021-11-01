@@ -14,7 +14,7 @@ class AddForeignKeysToProductTypesTable extends Migration
     public function up()
     {
         Schema::table('product_types', function (Blueprint $table) {
-            $table->foreign(['default_putaway_location_id'], 'fk_product_types_locations1')->references(['id'])->on('locations')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['location_id'], 'fk_product_types_locations1')->references(['id'])->on('locations')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

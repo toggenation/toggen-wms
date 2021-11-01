@@ -25,11 +25,8 @@ class ProductTypeFactory extends Factory
             'default_inventory_status_id' => null,
             'active' => true,
             'name' => strtoupper($this->faker->lexify('???')),
-            'code_prefix' => $this->faker->numerify('#####'),
             'storage_temperature' => $this->faker->randomElement([5, 2, 30]),
-            'default_putaway_location_id' => null,
-            'code_regex' => '/abc/',
-            'code_regex_description' => 'Includes abc',
+            'location_id' => null,
             'enable_pick_app' => false
         ];
     }

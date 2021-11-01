@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             $table->integer('quantity');
             $table->string('trade_unit_barcode', 14)->nullable();
             $table->string('consumer_unit_barcode', 14)->nullable();
-            $table->integer('product_type_id')->index('fk_items_product_types1_idx');
+            $table->unsignedBigInteger('product_type_id')->index('fk_items_product_types1_idx');
             $table->string('brand', 32)->nullable();
             $table->string('variant', 32)->nullable();
             $table->integer('unit_net_contents')->nullable();

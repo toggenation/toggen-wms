@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductionInventoryItemsTable extends Migration
+class CreateItemsPalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductionInventoryItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('production_inventory_items', function (Blueprint $table) {
+        Schema::create('items_pallets', function (Blueprint $table) {
             $table->integer('id', true);
             $table->unsignedInteger('item_id')->nullable()->index('fk_inventory_items_items1_idx');
             $table->integer('inventory_id')->nullable()->index('fk_inventory_items_inventory_idx');

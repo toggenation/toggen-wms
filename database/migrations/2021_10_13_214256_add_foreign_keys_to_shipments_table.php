@@ -15,7 +15,7 @@ class AddForeignKeysToShipmentsTable extends Migration
     {
         Schema::table('shipments', function (Blueprint $table) {
             $table->foreign(['address_id'], 'fk_shipments_addresses1')->references(['id'])->on('addresses')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign(['inventory_id'], 'fk_shipments_inventory1')->references(['id'])->on('production_inventory')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['pallet_id'], 'fk_shipments_inventory1')->references(['id'])->on('pallets')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
