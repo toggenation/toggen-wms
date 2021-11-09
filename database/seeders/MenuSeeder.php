@@ -59,6 +59,12 @@ class MenuSeeder extends Seeder
                         'icon' => 'faListAlt'
                     ],
                     [
+                        'name' => 'Settings',
+                        'route_url' => 'admin.settings',
+                        'active' => 1,
+                        'icon' => 'faCogs'
+                    ],
+                    [
                         'name' => 'Printers',
                         'route_url' => 'admin.printers',
                         'active' => 1,
@@ -90,11 +96,18 @@ class MenuSeeder extends Seeder
                     [
                         'name' => 'Dispatch',
                         'route_url' => 'warehouse.dispatch',
-                        'icon' => 'faTruck'
+                        'icon' => 'faTruckLoading'
                     ],
 
                     [
                         'name' => 'Track Pallets',
+                        'route_url' => 'warehouse.track-pallets',
+                        'icon' => 'faPallet'
+                    ],
+
+
+                    [
+                        'name' => 'Locations',
                         'route_url' => 'warehouse.track-pallets',
                         'icon' => 'faPallet'
                     ],

@@ -13,8 +13,9 @@ class AddForeignKeysToItemsPalletsTable extends Migration
      */
     public function up()
     {
-        Schema::table('items_pallets', function (Blueprint $table) {
-            $table->foreign(['inventory_id'], 'fk_inventory_items_inventory')->references(['id'])->on('pallets')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+        Schema::table('item_pallet', function (Blueprint $table) {
+            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('pallet_id')->references('id')->on('pallets');
             $table->foreign(['item_id'], 'fk_inventory_items_items1')->references(['id'])->on('items')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
@@ -26,7 +27,7 @@ class AddForeignKeysToItemsPalletsTable extends Migration
      */
     public function down()
     {
-        Schema::table('items_pallets', function (Blueprint $table) {
+        Schema::table('item_pallet', function (Blueprint $table) {
             $table->dropForeign('fk_inventory_items_inventory');
             $table->dropForeign('fk_inventory_items_items1');
         });

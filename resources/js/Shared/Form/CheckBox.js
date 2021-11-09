@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default props => {
-  const { divClasses, label, name, ...replace } = props;
+  const { errors, divClasses, label, name, ...replace } = props;
 
   return (
     <div className={divClasses}>
@@ -14,6 +14,7 @@ export default props => {
         />
         <span className="ml-2">{label}</span>
       </label>
+      <div class="text-xs text-red-700 ml-5">{errors}</div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ export default props => {
   return (
     <div className="w-full pb-6">
       <label className="block text-left w-full pr-6">
-        <span className="text-black">{label}</span>
+        <div className="text-black mb-2">{label}</div>
         <textarea {...attributes}></textarea>
       </label>
       {errors && <div className="form-error">{errors}</div>}

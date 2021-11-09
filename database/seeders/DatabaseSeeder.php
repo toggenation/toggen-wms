@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Models\Organization;
+use App\Models\Pallet;
 use App\Models\ProductionLine;
 use App\Models\ProductType;
 use App\Models\Role;
@@ -55,6 +56,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Item::factory()->count(15)->create();
         // UnitsOfMeasure::factory(5)->create();
         ProductionLine::factory(4)->create();
+
+        $this->call(SettingSeeder::class);
+        Pallet::factory()->count(15)->create();
     }
 
     protected function getRoleData()

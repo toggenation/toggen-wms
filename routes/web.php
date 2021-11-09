@@ -116,24 +116,39 @@ Route::get('m', function () {
 
 Route::get('admin', 'BlankController@placeHolder')->name('admin');
 
-Route::prefix('admin')->name('admin.')->group(
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(
     function () {
         Route::get('badroute', function () {
             return Inertia::render('Admin/BadRoute');
         })->name('bad.route');
-        Route::get('menus')->name('menus')->uses('MenusController@index')->middleware('remember', 'auth');
-        Route::get('menus/create')->name('menus.create')->uses('MenusController@create')->middleware('auth');
-        Route::post('menus')->name('menus.store')->uses('MenusController@store')->middleware('auth');
-        Route::get('menus/{menu}/edit')->name('menus.edit')->uses('MenusController@edit')->middleware('auth');
-        Route::put('menus/{menu}')->name('menus.update')->uses('MenusController@update')->middleware('auth');
-        Route::put('menus/{menu}/up')->name('menus.up')->uses('MenusController@moveUp')->middleware('auth');
-        Route::put('menus/{menu}/down')->name('menus.down')->uses('MenusController@moveDown')->middleware('auth');
-        Route::put('menus/{menu}/parent')->name('menus.parent')->uses('MenusController@makeRoot')->middleware('auth');
-        Route::put('menus/{menu}/child')->name('menus.child')->uses('MenusController@makeChild')->middleware('auth');
-        Route::delete('menus/{menu}')->name('menus.destroy')->uses('MenusController@destroy')->middleware('auth');
-        Route::put('menus/{menu}/restore')->name('menus.restore')->uses('MenusController@restore')->middleware('auth');
+
+        // menus
+        Route::get('menus')->name('menus')->uses('MenusController@index')->middleware('remember');
+        Route::get('menus/create')->name('menus.create')->uses('MenusController@create');
+        Route::post('menus')->name('menus.store')->uses('MenusController@store');
+        Route::get('menus/{menu}/edit')->name('menus.edit')->uses('MenusController@edit');
+        Route::put('menus/{menu}')->name('menus.update')->uses('MenusController@update');
+        Route::put('menus/{menu}/up')->name('menus.up')->uses('MenusController@moveUp');
+        Route::put('menus/{menu}/down')->name('menus.down')->uses('MenusController@moveDown');
+        Route::put('menus/{menu}/parent')->name('menus.parent')->uses('MenusController@makeRoot');
+        Route::put('menus/{menu}/child')->name('menus.child')->uses('MenusController@makeChild');
+        Route::delete('menus/{menu}')->name('menus.destroy')->uses('MenusController@destroy');
+        Route::put('menus/{menu}/restore')->name('menus.restore')->uses('MenusController@restore');
+
+
+
+        //printers
         Route::get('printers', 'BlankController@placeHolder')->name('printers');
         Route::get('print-templates', 'BlankController@placeHolder')->name('print-templates');
+
+        # settings
+        Route::get('settings')->name('settings')->uses('SettingsController@index')->middleware('remember');
+        Route::get('settings/create')->name('settings.create')->uses('SettingsController@create');
+        Route::post('settings')->name('settings.store')->uses('SettingsController@store');
+        Route::get('settings/{setting}/edit')->name('settings.edit')->uses('SettingsController@edit');
+        Route::put('settings/{setting}')->name('settings.update')->uses('SettingsController@update');
+        Route::delete('settings/{setting}')->name('settings.destroy')->uses('SettingsController@destroy');
+        Route::put('settings/{setting}/restore')->name('settings.restore')->uses('SettingsController@restore');
     }
 
 
@@ -210,6 +225,8 @@ Route::get("barcode", function () {
 })->name('barcode');
 
 Route::post('barcode', 'BarcodeController@calc')->name('barcode.calc');
+
+Route::post('/pallet/add', 'PalletsController@add')->name('pallet.add');
 
 Route::get(
     '/valid',

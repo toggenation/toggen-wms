@@ -15,9 +15,12 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->integer('id', true);
+            $table->boolean('active');
             $table->string('name', 30)->unique('settings_name_uq');
-            $table->text('comment');
             $table->text('setting');
+            $table->text('comment')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

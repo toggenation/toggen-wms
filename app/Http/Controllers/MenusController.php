@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MenuStoreRequest;
 use App\Http\Requests\MenuUpdateRequest;
 use App\Http\Resources\MenuCollection;
 use App\Models\Menu;
@@ -43,7 +44,11 @@ class MenusController extends Controller
     public function create()
     {
         return Inertia::render('Menus/Create', [
+            // 'user' => new UserResource($user),
+            'root_menus' => Menu::whereIsRoot()->get(),
             'routes' => array_keys(Route::getRoutes()->getRoutesByName())
+
+            // 'roles' => Role::where('active', 1)->get()
         ]);
     }
 
@@ -53,9 +58,12 @@ class MenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MenuStoreRequest $request)
     {
-        //
+
+        Menu::create($request->validated());
+
+        return Redirect::route('admin.menus')->with('success', 'Setting created.');
     }
 
     /**

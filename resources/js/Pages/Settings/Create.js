@@ -5,30 +5,30 @@ import Layout from '@/Shared/Layout';
 import LoadingButton from '@/Shared/LoadingButton';
 import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
+import TextAreaInput from '@/Shared/Form/TextAreaInput';
 import CheckBox from '@/Shared/Form/CheckBox';
+
 const Create = () => {
-  const { root_menus } = usePage().props;
   const { data, setData, errors, post, processing } = useForm({
     active: true,
     name: '',
-    route_url: '',
-    parent_id: '',
-    icon: ''
+    setting: '',
+    comment: ''
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    post(route('admin.menus.store'));
+    post(route('admin.settings.store'));
   }
 
   return (
     <div>
       <h1 className="mb-8 text-3xl font-bold">
         <InertiaLink
-          href={route('admin.menus')}
+          href={route('admin.settings')}
           className="text-indigo-600 hover:text-indigo-700"
         >
-          Menus
+          Setting
         </InertiaLink>
         <span className="font-medium text-indigo-600"> /</span> Create
       </h1>
@@ -36,15 +36,15 @@ const Create = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-wrap p-8 -mb-8 -mr-6">
             <CheckBox
-              divClasses="mb-6 w-1/2"
+              divClasses="mb-6"
               name="active"
               checked={data.active}
               label="Active"
+              errors={errors.active}
               onChange={e => setData('active', e.target.checked)}
             />
-
             <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
+              className="w-full pb-8 pr-6"
               label="Name"
               name="name"
               errors={errors.name}
@@ -52,44 +52,22 @@ const Create = () => {
               onChange={e => setData('name', e.target.value)}
             />
             <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Route"
-              name="route_url"
+              className="w-full pb-8 pr-6"
+              label="Setting"
+              name="setting"
               type="text"
-              errors={errors.route_url}
-              value={data.route_url}
-              onChange={e => setData('route_url', e.target.value)}
+              errors={errors.setting}
+              value={data.setting}
+              onChange={e => setData('setting', e.target.value)}
             />
 
-            <SelectInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Parent"
-              name="parent_id"
-              errors={errors.parent_id}
-              value={data.parent_id}
-              onChange={e => setData('parent_id', e.target.value)}
-            >
-              <option key={0} value="">
-                (Is root)
-              </option>
-              {root_menus &&
-                root_menus.map(parentMenu => {
-                  return (
-                    <option key={parentMenu.id} value={parentMenu.id}>
-                      {parentMenu.name}
-                    </option>
-                  );
-                })}
-            </SelectInput>
-
-            <TextInput
-              className="w-full pb-8 pr-6 lg:w-1/2"
-              label="Icon"
-              name="icon"
-              type="text"
-              errors={errors.icon}
-              value={data.icon}
-              onChange={e => setData('icon', e.target.value)}
+            <TextAreaInput
+              name="comment"
+              errors={errors.comment}
+              value={data.comment}
+              onChange={e => setData('comment', e.target.value)}
+              label="Item comment"
+              placeholder="Please enter a comment"
             />
           </div>
           <div className="flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200">
@@ -98,7 +76,7 @@ const Create = () => {
               type="submit"
               className="btn-indigo"
             >
-              Create Setting
+              Create Item
             </LoadingButton>
           </div>
         </form>

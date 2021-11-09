@@ -22,7 +22,6 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        // ddd(Item::where('active', 1)->orderBy('code')->paginate(5));
         return Inertia::render('Items/Index', [
             'filters' => Request::all('search', 'trashed'),
             'items' =>  new ItemCollection(
@@ -31,13 +30,6 @@ class ItemsController extends Controller
                     ->paginate()
                     ->appends(Request::all())
             )
-            // 'organizations' => new OrganizationCollection(
-            //     Auth::user()->account->organizations()
-            //         ->orderBy('name')
-            //         ->filter(Request::only('search', 'trashed'))
-            //         ->paginate()
-            //         ->appends(Request::all())
-            // ),
         ]);
     }
 

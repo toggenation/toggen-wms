@@ -15,10 +15,9 @@ class CreatePalletsTable extends Migration
     {
         Schema::create('pallets', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('unit_of_measure_id')->nullable()->index('fk_inventory_units_of_measure1_idx');
-            $table->integer('location_id')->nullable()->index('fk_inventory_locations1_idx');
-            $table->integer('inventory_status_id')->nullable()->index('fk_inventory_inventory_statuses1_idx');
-            $table->string('serial_number', 45)->nullable();
+            $table->integer('location_id')->nullable();
+            $table->integer('inventory_status_id')->nullable();
+            $table->string('sscc_reference_number', 45)->unique('sscc_ref_unique');
             $table->timestamps();
         });
     }
