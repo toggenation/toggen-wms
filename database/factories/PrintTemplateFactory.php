@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Model;
+use App\Models\PrintTemplate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PrintTemplateFactory extends Factory
@@ -12,7 +12,7 @@ class PrintTemplateFactory extends Factory
      *
      * @var string
      */
-    protected $model = Model::class;
+    protected $model = PrintTemplate::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +23,10 @@ class PrintTemplateFactory extends Factory
     {
         return [
             'name' => $this->faker->words(3, true),
-            'description' => $this->faker->sentence(6),
+            'description' => $this->faker->sentence(4),
             'template' => $this->faker->word() . '.' . $this->faker->fileExtension(), // glabels, nicelabels, cablabel
-            'image' => 'sample.png',
-            'show_in_ui' => true,
+            'image' => $this->faker->word() . '.png',
+            'show_in_ui' => $this->faker->randomElement([true, false]),
             'print_class' => 'App\Toggen\Print\Templates',
         ];
     }

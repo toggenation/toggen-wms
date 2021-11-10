@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Pallet;
+use App\Models\PrintTemplate;
 use App\Models\ProductionLine;
 use App\Models\ProductType;
 use App\Models\Role;
@@ -74,6 +75,8 @@ class DatabaseSeeder extends Seeder
                 'product_type_id' => $faker->randomElement($productTypes)
             ]);
         }
+
+        PrintTemplate::factory()->count(9)->create();
     }
 
     protected function getRoleData()

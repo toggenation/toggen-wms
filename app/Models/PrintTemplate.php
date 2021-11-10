@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class PrintTemplate extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+            $query->orWhere('description', 'like', '%' . $search . '%');
+        })->when($filters['active'] ?? null, function ($query, $active) {
+            if ($active === 'active') {
+                $query->where('active', true);
+            } elseif ($active === 'not-active') {
+                $query->where('active', false);
+            }
+        });
+    }
 }

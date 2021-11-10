@@ -145,7 +145,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(
 
         //printers
         Route::get('printers', 'BlankController@placeHolder')->name('printers');
-        Route::get('print-templates', 'BlankController@placeHolder')->name('print-templates');
+
+        # print-templates
+        Route::get('print-templates')->name('print-templates')->uses('PrintTemplateController@index');
+        Route::get('print-templates/create')->name('print-templates.create')->uses('PrintTemplateController@create');
+        Route::post('print-templates')->name('print-templates.store')->uses('PrintTemplateController@store');
+        Route::get('print-templates/{print_template}/edit')->name('print-templates.edit')->uses('PrintTemplateController@edit');
+        Route::put('print-templates/{print_template}')->name('print-templates.update')->uses('PrintTemplateController@update');
+        Route::delete('print-templates/{print_template}')->name('print-templates.destroy')->uses('PrintTemplateController@destroy');
+        Route::put('print-templates/{print_template}/restore')->name('print-templates.restore')->uses('PrintTemplateController@restore');
+
 
         # settings
         Route::get('settings')->name('settings')->uses('SettingsController@index')->middleware('remember');
