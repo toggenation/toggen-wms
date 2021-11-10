@@ -13,12 +13,14 @@
 
 // Auth
 
+use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BlankController;
 use App\Models\Menu;
 use App\Models\Item;
 use App\Models\ProductionLine;
 use App\Rules\BarcodeRule;
+use App\Services\Barcode;
 use App\Services\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -122,6 +124,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(
             return Inertia::render('Admin/BadRoute');
         })->name('bad.route');
 
+        //barcode
+        Route::post('barcode', 'BarcodeController@calc')->name('barcode.calc');
+        Route::get("barcode", [BarcodeController::class, 'show'])->name('barcode');
+
         // menus
         Route::get('menus')->name('menus')->uses('MenusController@index')->middleware('remember');
         Route::get('menus/create')->name('menus.create')->uses('MenusController@create');
@@ -149,6 +155,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(
         Route::put('settings/{setting}')->name('settings.update')->uses('SettingsController@update');
         Route::delete('settings/{setting}')->name('settings.destroy')->uses('SettingsController@destroy');
         Route::put('settings/{setting}/restore')->name('settings.restore')->uses('SettingsController@restore');
+
+        # locations
+        Route::get('locations')->name('locations')->uses('LocationsController@index');
+        Route::get('locations/create')->name('locations.create')->uses('LocationsController@create');
+        Route::post('locations')->name('locations.store')->uses('LocationsController@store');
+        Route::get('locations/{location}/edit')->name('locations.edit')->uses('LocationsController@edit');
+        Route::put('locations/{location}')->name('locations.update')->uses('LocationsController@update');
+        Route::delete('locations/{location}')->name('locations.destroy')->uses('LocationsController@destroy');
+        Route::put('locations/{location}/restore')->name('locations.restore')->uses('LocationsController@restore');
     }
 
 
@@ -220,11 +235,8 @@ Route::get('temp', fn () => Menu::where('active', '=', 1)->where('parent_id', nu
 }])->get());
 
 
-Route::get("barcode", function () {
-    return Inertia::render('Barcode/CheckDigit');
-})->name('barcode');
 
-Route::post('barcode', 'BarcodeController@calc')->name('barcode.calc');
+
 
 Route::post('/pallet/add', 'PalletsController@add')->name('pallet.add');
 
@@ -235,7 +247,7 @@ Route::get(
         //     'barcode' => [new Barcode]
         // ]);
         // ddd($validated);}
-        $rules = ['barcode' => [new  Barcode]];
+        $rules = ['barcode' => [new  BarcodeRule(new Barcode)]];
         $validator = Validator::make($request->all(), $rules);
         $validator->fails();
         dd($validator->errors());

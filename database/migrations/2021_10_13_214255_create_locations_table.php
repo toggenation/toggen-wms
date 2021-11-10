@@ -15,7 +15,8 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('location', 75);
+            $table->boolean('active')->default(true);
+            $table->string('name', 75)->unique();
             $table->integer('capacity');
             $table->boolean('hidden');
             $table->string('description', 75);

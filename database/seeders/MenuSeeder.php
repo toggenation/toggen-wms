@@ -79,11 +79,17 @@ class MenuSeeder extends Seeder
                     [
                         'name' => 'Barcode',
                         'title' => 'Check digit calculator',
-                        'route_url' => 'barcode',
+                        'route_url' => 'admin.barcode',
                         'active' => 1,
                         'icon' => 'faBarcode'
 
-                    ]
+                    ],
+                    [
+                        'name' => 'Locations',
+                        'route_url' => 'admin.locations',
+                        'active' => 1,
+                        'icon' => 'warehouse'
+                    ],
                 ],
 
             ],
@@ -103,14 +109,10 @@ class MenuSeeder extends Seeder
                         'name' => 'Track Pallets',
                         'route_url' => 'warehouse.track-pallets',
                         'icon' => 'faPallet'
-                    ],
+                    ]
 
 
-                    [
-                        'name' => 'Locations',
-                        'route_url' => 'warehouse.track-pallets',
-                        'icon' => 'faPallet'
-                    ],
+
                 ]
             ],
             [
@@ -149,6 +151,12 @@ class MenuSeeder extends Seeder
                         'icon' => 'faFileAlt'
                     ]
                 ]
+            ],
+            [
+                'name' => 'External',
+                'active' => 1,
+                'route_url' => 'https://toggen.com.au',
+                'icon' => '',
             ]
 
 

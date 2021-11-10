@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LocationUpdateRequest extends FormRequest
 {
@@ -23,8 +24,17 @@ class LocationUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route()->parameters()['location']->id;
+
         return [
-            //
+            'product_type_id' => ['required', 'exists:product_types,id'],
+            'description' => ['nullable'],
+            'name' => [
+                'required',
+                Rule::unique('locations', 'name')->ignore($id)
+            ],
+            'active' => ['boolean'],
+            'capacity' => ['integer']
         ];
     }
 }

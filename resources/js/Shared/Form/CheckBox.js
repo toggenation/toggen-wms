@@ -14,7 +14,7 @@ export default props => {
         />
         <span className="ml-2">{label}</span>
       </label>
-      <div class="text-xs text-red-700 ml-5">{errors}</div>
+      <div className="text-xs text-red-700 ml-5">{errors}</div>
     </div>
   );
 };

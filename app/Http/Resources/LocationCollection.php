@@ -14,6 +14,17 @@ class LocationCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        return $this->collection->map->only(
+            'id',
+            'name',
+            'description',
+            'active',
+            'capacity',
+            'product_type_id',
+            'product_types'
+        );
+
+        // return parent::toArray($request);
     }
 }

@@ -12,28 +12,29 @@ import TrashedMessage from '@/Shared/TrashedMessage';
 import CheckBox from '@/Shared/Form/CheckBox';
 
 const Edit = () => {
-  const { setting } = usePage().props;
+  const { location, product_types } = usePage().props;
   const { data, setData, errors, put, processing } = useForm({
-    active: setting.active,
-    name: setting.name || '',
-    setting: setting.setting || '',
-    comment: setting.comment || ''
+    active: location.active,
+    capacity: location.capacity || '',
+    name: location.name || '',
+    description: location.description || '',
+    product_type_id: location.product_type_id || ''
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    put(route('admin.settings.update', setting.id));
+    put(route('admin.locations.update', location.id));
   }
 
   function destroy() {
     if (confirm('Are you sure you want to delete this item?')) {
-      Inertia.delete(route('admin.settings.destroy', setting.id));
+      Inertia.delete(route('admin.locations.destroy', location.id));
     }
   }
 
   function restore() {
     if (confirm('Are you sure you want to restore this item?')) {
-      Inertia.put(route('admin.settings.restore', setting.id));
+      Inertia.put(route('admin.locations.restore', location.id));
     }
   }
 
@@ -42,15 +43,15 @@ const Edit = () => {
       <Helmet title={data.name} />
       <h1 className="mb-8 text-3xl font-bold">
         <InertiaLink
-          href={route('admin.settings')}
+          href={route('admin.locations')}
           className="text-indigo-600 hover:text-indigo-700"
         >
-          Settings
+          Locations
         </InertiaLink>
         <span className="mx-2 font-medium text-indigo-600">/</span>
         {data.name}
       </h1>
-      {setting.deleted_at && (
+      {location.deleted_at && (
         <TrashedMessage onRestore={restore}>
           This item has been deleted.
         </TrashedMessage>
@@ -76,27 +77,48 @@ const Edit = () => {
               />
               <TextInput
                 className="w-full pb-8 pr-6"
-                label="Setting"
-                name="setting"
+                label="Description"
+                name="description"
                 type="text"
-                errors={errors.setting}
-                value={data.setting}
-                onChange={e => setData('setting', e.target.value)}
+                errors={errors.description}
+                value={data.description}
+                onChange={e => setData('description', e.target.value)}
               />
 
-              <TextAreaInput
-                name="comment"
-                className="border border-1 border-gray-300 border-solid p-2 p-y-2 pb-8 pr-6 rounded-md w-full w-full pb-8 pr-6 rounded-sm border-gray border-solid border-1"
-                errors={errors.comment}
-                value={data.comment}
-                onChange={e => setData('comment', e.target.value)}
-                label="Item comment"
-                placeholder="Please enter a comment"
+              <TextInput
+                className="w-full pb-8 pr-6"
+                label="Capacity"
+                name="capacity"
+                type="text"
+                errors={errors.capacity}
+                value={data.capacity}
+                onChange={e => setData('capacity', e.target.value)}
               />
+
+              <SelectInput
+                className="w-full pb-8 pr-6 lg:w-1/2"
+                label="Product type"
+                name="product_type_id"
+                errors={errors.product_type_id}
+                value={data.product_type_id}
+                onChange={e => setData('product_type_id', e.target.value)}
+              >
+                <option key={0} value="">
+                  (select)
+                </option>
+                {product_types &&
+                  product_types.map(productType => {
+                    return (
+                      <option key={productType.id} value={productType.id}>
+                        {productType.name}
+                      </option>
+                    );
+                  })}
+              </SelectInput>
             </div>
           </div>
-          <div className="flex items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
-            {!setting.deleted_at && (
+          <div className="flex -ml-4 -mb-4 -mr-4 rounded items-center px-8 py-4 bg-gray-100 border-t border-gray-200">
+            {!location.deleted_at && (
               <DeleteButton onDelete={destroy}>Delete Item</DeleteButton>
             )}
             <LoadingButton

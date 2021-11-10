@@ -5,13 +5,16 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Account;
 use App\Models\Contact;
+use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Pallet;
 use App\Models\ProductionLine;
 use App\Models\ProductType;
 use App\Models\Role;
 use App\Models\UnitsOfMeasure;
+use App\Services\Location as LocationCreator;
 use Illuminate\Database\Seeder;
+use Faker\Factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -59,6 +62,18 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SettingSeeder::class);
         Pallet::factory()->count(15)->create();
+
+        $productTypes = ProductType::all()->pluck('id');
+        $locations = (new LocationCreator)->generate();
+        $faker = Factory::create();
+
+        foreach ($locations as $location) {
+            Location::factory()->create([
+                'name' => $location,
+                'active' => $faker->randomElement([true, false]),
+                'product_type_id' => $faker->randomElement($productTypes)
+            ]);
+        }
     }
 
     protected function getRoleData()

@@ -15,23 +15,22 @@ const CheckDigit = props => {
     barcode: ''
   });
 
-
   const handleSubmit = e => {
     e.preventDefault();
     post(route('barcode.calc'));
   };
 
   const handleUpdate = e => {
-    setData('barcode', e.target.value)
-  }
+    setData('barcode', e.target.value);
+  };
 
   return (
     <div>
       <h1 className="mb-8 text-3xl font-bold">Barcode Checkdigit Calculator</h1>
-      <div className="max-w-3xl overflow-hidden bg-white rounded shadow">
+      <div className="lg:max-w-3xl sm:w-full overflow-hidden bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
-          <div className="p-8 -mb-8 -mr-6 flex">
-            <div className="block lg:w-1/3">
+          <div className="p-8 -mb-8 -mr-6 flex flex-wrap">
+            <div className="lg:w-1/3 sm:w-full">
               <TextInput
                 className="w-full pr-6"
                 label="Barcode without checkdigit"
@@ -42,7 +41,7 @@ const CheckDigit = props => {
               />
               <div className="pb-4 text-xs">{data.barcode.length}</div>
             </div>
-            <div className="mb-6 lg:w-1/3 block">
+            <div className="mb-6 lg:w-1/3 sm:w-full block">
               <label>Length</label>
               <div
                 style={{ height: '42px' }}
@@ -51,7 +50,7 @@ const CheckDigit = props => {
                 {barcode && barcode.length}
               </div>
             </div>
-            <div className="mb-6 lg:w-1/3 block">
+            <div className="mb-6 lg:w-1/3 block sm:w-full">
               <label>Barcode with checkdigit</label>
               <div
                 style={{ height: '42px' }}

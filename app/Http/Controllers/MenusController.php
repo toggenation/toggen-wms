@@ -124,7 +124,9 @@ class MenusController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+
+        return redirect()->route('admin.menus')->with('success', "Menu deleted.");
     }
 
     public function moveUp(Menu $menu, $places = 1)

@@ -22,7 +22,11 @@ export default ({ icon, link, text }) => {
   if (external) {
     return (
       <div className="mb-4">
-        <a href={linkRoute} className="flex items-center group py-3">
+        <a
+          href={linkRoute}
+          target="_blank"
+          className="flex items-center group py-3"
+        >
           <Icon name={icon} className={iconClasses} />
           <div className={textClasses}>{text}</div>
         </a>

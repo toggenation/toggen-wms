@@ -21,4 +21,10 @@ class BarcodeController extends Controller
             'length' => strlen($barcode)
         ]);
     }
+
+    public function show()
+    {
+
+        return Inertia::render('Barcode/CheckDigit');
+    }
 }

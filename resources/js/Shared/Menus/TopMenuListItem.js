@@ -12,6 +12,7 @@ const TopMenuListItem = ({
   title,
   icon
 }) => {
+  // console.log(usePage().props);
   const { external, linkRoute } = resolveRoute(route_url);
   const textClasses = classNames({
     flex: true,

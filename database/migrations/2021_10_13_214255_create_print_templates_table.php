@@ -15,16 +15,13 @@ class CreatePrintTemplatesTable extends Migration
     {
         Schema::create('print_templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('active')->nullable();
-            $table->string('name', 45)->unique('print_template_name_uq');
-            $table->string('description', 100)->nullable();
-            $table->string('template_path')->nullable();
-            $table->string('sample_image')->nullable();
-            $table->boolean('label_chooser')->nullable();
-            $table->string('print_class');
-            $table->string('route');
-            $table->string('comment')->nullable();
-            $table->integer('sort_order')->nullable()->comment('Allow changing sort order');
+            $table->boolean('active')->default(true);
+            $table->string('name')->unique('print_template_name_uq');
+            $table->string('description')->nullable();
+            $table->string('template')->nullable(); // glabels, nicelabels, cablabel
+            $table->string('image')->nullable();
+            $table->boolean('show_in_ui')->nullable();
+            $table->string('print_class')->nullable();
             $table->timestamps();
         });
     }

@@ -8,22 +8,22 @@ import Pagination from '@/Shared/Pagination';
 import IconActive from '@/Shared/Icons/IconActive';
 
 const Index = () => {
-  const { settings } = usePage().props;
+  const { locations } = usePage().props;
   const {
     data,
     meta: { links }
-  } = settings;
+  } = locations;
   return (
     <div>
-      <h1 className="mb-8 text-3xl font-bold">Settings</h1>
+      <h1 className="mb-8 text-3xl font-bold">Locations</h1>
       <div className="flex items-center justify-between mb-6">
         <SearchActive />
         <InertiaLink
           className="btn-indigo focus:outline-none"
-          href={route('admin.settings.create')}
+          href={route('admin.locations.create')}
         >
           <span>Create</span>
-          <span className="hidden md:inline"> Item</span>
+          <span className="hidden md:inline"> Location</span>
         </InertiaLink>
       </div>
       <div className="overflow-x-auto bg-white rounded shadow">
@@ -32,65 +32,67 @@ const Index = () => {
             <tr className="font-bold text-left">
               <th className="px-6 pt-5 pb-4">Active</th>
               <th className="px-6 pt-5 pb-4">Name</th>
-              <th className="px-6 pt-5 pb-4">Setting</th>
-              <th className="px-6 pt-5 pb-4">Comment</th>
+              <th className="px-6 pt-5 pb-4">Capacity</th>
+              <th className="px-6 pt-5 pb-4">Description</th>
             </tr>
           </thead>
           <tbody>
-            {data.map(({ id, name, active, deleted_at, setting, comment }) => {
-              return (
-                <tr
-                  key={id}
-                  className="hover:bg-gray-100 focus-within:bg-gray-100"
-                >
-                  <td className="border-t">
-                    <InertiaLink
-                      tabIndex="-1"
-                      href={route('admin.settings.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
-                    >
-                      <IconActive isActive={active} />
-                    </InertiaLink>
-                  </td>
-                  <td className="border-t">
-                    <InertiaLink
-                      href={route('admin.settings.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
-                    >
-                      {name}
-                      {deleted_at && (
-                        <Icon
-                          name="trash"
-                          className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
-                        />
-                      )}
-                    </InertiaLink>
-                  </td>
-                  <td className="border-t">
-                    <InertiaLink
-                      tabIndex="-1"
-                      href={route('admin.settings.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
-                    >
-                      {setting}
-                    </InertiaLink>
-                  </td>
-                  <td className="border-t">
-                    <InertiaLink
-                      tabIndex="-1"
-                      href={route('admin.settings.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
-                    >
-                      {comment}
-                    </InertiaLink>
-                  </td>
-                </tr>
-              );
-            })}
+            {data.map(
+              ({ id, name, active, deleted_at, description, capacity }) => {
+                return (
+                  <tr
+                    key={id}
+                    className="hover:bg-gray-100 focus-within:bg-gray-100"
+                  >
+                    <td className="border-t">
+                      <InertiaLink
+                        tabIndex="-1"
+                        href={route('admin.locations.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                      >
+                        <IconActive isActive={active} />
+                      </InertiaLink>
+                    </td>
+                    <td className="border-t">
+                      <InertiaLink
+                        href={route('admin.locations.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
+                      >
+                        {name}
+                        {deleted_at && (
+                          <Icon
+                            name="trash"
+                            className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
+                          />
+                        )}
+                      </InertiaLink>
+                    </td>
+                    <td className="border-t">
+                      <InertiaLink
+                        tabIndex="-1"
+                        href={route('admin.locations.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                      >
+                        {capacity}
+                      </InertiaLink>
+                    </td>
+                    <td className="border-t">
+                      <InertiaLink
+                        tabIndex="-1"
+                        href={route('admin.locations.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                      >
+                        {description}
+                      </InertiaLink>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
             {data.length === 0 && (
               <tr>
                 <td className="px-6 py-4 border-t" colSpan="4">
-                  No Settings Found.
+                  No Locations Found.
                 </td>
               </tr>
             )}
@@ -102,6 +104,6 @@ const Index = () => {
   );
 };
 
-Index.layout = page => <Layout title="Settings" children={page} />;
+Index.layout = page => <Layout title="Locations" children={page} />;
 
 export default Index;
