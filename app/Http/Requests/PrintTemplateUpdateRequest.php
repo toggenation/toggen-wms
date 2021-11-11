@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PrintTemplate;
+use App\Rules\FilenameRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 
 class PrintTemplateUpdateRequest extends FormRequest
@@ -41,8 +44,30 @@ class PrintTemplateUpdateRequest extends FormRequest
                 Rule::unique('print_templates', 'name')->ignore($id)
             ],
             'description' => ['nullable'],
-            'template' => ['nullable'],
-            'image' => ['nullable', 'image'],
+            'template' => [
+                'nullable',
+                new FilenameRule(['glabels', 'nlbl', 'cablbl', 'txt', 'csv']),
+                function ($attribute, $value, $fail) use ($id) {
+                    $file = $value->getClientOriginalName();
+                    $count = PrintTemplate::query()->where('template', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
+
+                    if ($count > 0) {
+                        $fail("Name for {$attribute} already taken");
+                    }
+                }
+            ],
+            'image' => [
+                'nullable',
+                'image',
+                function ($attribute, $value, $fail) use ($id) {
+                    $file = $value->getClientOriginalName();
+                    $count = PrintTemplate::query()->where('image', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
+
+                    if ($count > 0) {
+                        $fail("Name for {$attribute} already taken");
+                    }
+                }
+            ],
             'show_in_ui' => ['boolean'],
             'print_class' => ['nullable']
         ];

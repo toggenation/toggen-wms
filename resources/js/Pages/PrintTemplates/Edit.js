@@ -14,7 +14,7 @@ import FileInput from '@/Shared/FileInput';
 
 const Edit = () => {
   const { print_template } = usePage().props;
-  const { data, setData, errors, post, processing } = useForm({
+  const { data, setData, errors, post, progress, processing } = useForm({
     active: print_template.active ? true : false,
     name: print_template.name || '',
     description: print_template.description || '',
@@ -55,12 +55,12 @@ const Edit = () => {
         <span className="mx-2 font-medium text-indigo-600">/</span>
         {data.name}
       </h1>
-      {print_template.image && (
+      {/* {print_template.image && (
         <img
           className="block w-8 h-8 ml-4 rounded-full"
           src={print_template.image}
         />
-      )}
+      )} */}
       {print_template.deleted_at && (
         <TrashedMessage onRestore={restore}>
           This item has been deleted.
@@ -118,7 +118,7 @@ const Edit = () => {
                 className="w-full pb-8 pr-6 lg:w-1/2"
                 label="Template"
                 name="template"
-                accept="*/*"
+                accept=".txt, .glabels, .nlbl"
                 errors={errors.template}
                 value={data.template}
                 onChange={template => setData('template', template)}
@@ -131,8 +131,13 @@ const Edit = () => {
                 accept="image/*"
                 errors={errors.image}
                 value={data.image}
-                onChange={image => setData('template', image)}
+                onChange={image => setData('image', image)}
               />
+              {progress && (
+                <progress value={progress.percentage} max="100">
+                  {progress.percentage}%
+                </progress>
+              )}
             </div>
           </div>
           <div className="flex -mx-4 -mb-4 rounded-b-md items-center px-8 py-4 bg-gray-100 border-t border-gray-200">

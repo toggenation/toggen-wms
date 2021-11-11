@@ -86,6 +86,9 @@ class PrintTemplateController extends Controller
      */
     public function update(PrintTemplate $printTemplate, PrintTemplateUpdateRequest $request)
     {
+
+        // dd(request()->file('template')->getClientOriginalName());
+        // return "Done";
         $printTemplate->update(
             $request->validated()
         );
