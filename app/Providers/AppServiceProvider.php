@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Services\Batch;
 use App\Services\BatchYDDDXX;
 use League\Glide\Server;
+use League\Glide\ServerFactory;
+use League\Glide\Responses\LaravelResponseFactory;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
@@ -26,10 +28,12 @@ class AppServiceProvider extends ServiceProvider
     protected function registerGlide()
     {
         $this->app->bind(Server::class, function ($app) {
-            return Server::create([
+            // dd(Storage::getDriver());
+            return ServerFactory::create([
+                'response' => new LaravelResponseFactory(app('request')),
                 'source' => Storage::getDriver(),
                 'cache' => Storage::getDriver(),
-                'cache_folder' => '.glide-cache',
+                'cache_path_prefix' => '.glide-cache',
                 'base_url' => 'img',
             ]);
         });

@@ -47,6 +47,7 @@ Route::put('users/{user}/restore')->name('users.restore')->uses('UsersController
 
 // Images
 Route::get('/img/{path}', 'ImagesController@show')->where('path', '.*');
+//Route::get('/img/{path}', 'ImagesController@testShow')->where('path', '.*');
 
 // Organizations
 Route::get('organizations')->name('organizations')->uses('OrganizationsController@index')->middleware('remember', 'auth');

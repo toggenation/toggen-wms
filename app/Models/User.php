@@ -58,8 +58,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function photoUrl(array $attributes)
     {
+
         if ($this->photo_path) {
-            return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
+            //$path = storage_path('app');
+            $glide = App::Make(Server::class);
+            $path = url($glide->getBaseUrl() . '/' . $this->photo_path) . "?";
+            $path .= http_build_query($attributes);
+
+            return $path;
         }
     }
 

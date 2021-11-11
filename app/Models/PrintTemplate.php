@@ -14,8 +14,6 @@ class PrintTemplate extends Model
 
     public function setTemplateAttribute($template)
     {
-        // dd(config('toggen.templates'));
-        // dd(storage_path('app/public'));
         if (!$template) return;
 
         $path = config('toggen.print.template.templates');
@@ -23,33 +21,17 @@ class PrintTemplate extends Model
         $this->handleUploadAttribute($template, 'template', $path);
     }
 
-
-
     public function setImageAttribute($image)
     {
-        // dd(config('toggen.templates'));
-        // dd(storage_path('app/public'));
-
         if (!$image) return;
-        // {
-        //     // don't null out image if it's not there
-        //     unset($this->attributes['image']);
-        //     return;
-        // }
-
 
         $path = config('toggen.print.template.examples');
 
         $this->handleUploadAttribute($image, 'template', $path);
-
-        // $this->attributes['image'] = $image instanceof UploadedFile
-        //     ? $image->storeAs($path, $image->getClientOriginalName())
-        //     : $image;
     }
 
     protected function handleUploadAttribute($field, $attribute, $dir)
     {
-        dd($field);
         $this->attributes[$attribute] = $field instanceof UploadedFile
             ? $field->storeAs($dir, $field->getClientOriginalName())
             : $field;
@@ -66,7 +48,6 @@ class PrintTemplate extends Model
     //         return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
     //     }
     // }
-
 
     public function scopeFilter($query, array $filters)
     {

@@ -19,7 +19,9 @@ const Edit = () => {
     name: print_template.name || '',
     description: print_template.description || '',
     template: '',
+    template_current: print_template.template || '',
     image: '',
+    image_current: print_template.image || '',
     show_in_ui: print_template.show_in_ui ? true : false,
     print_class: print_template.print_class,
     _method: 'PUT'
@@ -114,16 +116,18 @@ const Edit = () => {
                 value={data.print_class}
                 onChange={e => setData('print_class', e.target.value)}
               />
-              <FileInput
-                className="w-full pb-8 pr-6 lg:w-1/2"
-                label="Template"
-                name="template"
-                accept=".txt, .glabels, .nlbl"
-                errors={errors.template}
-                value={data.template}
-                onChange={template => setData('template', template)}
-              />
-
+              <div className="flex flex-wrap">
+                <FileInput
+                  className="w-full pb-8 pr-6 lg:w-1/2"
+                  label="Template"
+                  name="template"
+                  accept=".txt, .glabels, .nlbl"
+                  errors={errors.template}
+                  value={data.template}
+                  onChange={template => setData('template', template)}
+                />
+                <div className="align-text-middle">{data.template_current}</div>
+              </div>
               <FileInput
                 className="w-full pb-8 pr-6 lg:w-1/2"
                 label="Image"
