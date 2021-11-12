@@ -21,11 +21,11 @@ const Edit = () => {
     description: print_template.description || '',
     template: '',
     templateCurrent: print_template.template || '',
-    image: '',
+    // image: '',
     image_current: print_template.image || '',
     show_in_ui: print_template.show_in_ui ? true : false,
     print_class: print_template.print_class,
-    imageUrl: print_template.imageUrl || '',
+    imageUrl: '',
     _method: 'PUT'
   });
 
@@ -73,9 +73,9 @@ const Edit = () => {
       <div className="max-w-5xl p-4 bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
           <div className="flex mb-8 w-full">
-            <div className="w-full bg-transparent">
+            <div className="w-3/4 bg-transparent">
               <CheckBox
-                divClasses="mb-6 w-1/2"
+                divClasses="mb-6"
                 name="active"
                 checked={data.active}
                 errors={errors.active}
@@ -83,7 +83,7 @@ const Edit = () => {
                 onChange={e => setData('active', e.target.checked)}
               />
               <CheckBox
-                divClasses="mb-6 w-1/2"
+                divClasses="mb-6"
                 name="show_in_ui"
                 checked={data.show_in_ui}
                 errors={errors.show_in_ui}
@@ -92,7 +92,7 @@ const Edit = () => {
               />
 
               <TextInput
-                className="w-1/2 pb-8 pr-6"
+                className="pb-8 pr-6"
                 label="Name"
                 name="name"
                 errors={errors.name}
@@ -100,7 +100,7 @@ const Edit = () => {
                 onChange={e => setData('name', e.target.value)}
               />
               <TextInput
-                className="w-1/2 pb-8 pr-6"
+                className="pb-8 pr-6"
                 label="Description"
                 name="description"
                 type="text"
@@ -110,7 +110,7 @@ const Edit = () => {
               />
 
               <TextInput
-                className="w-1/2 pb-8 pr-6"
+                className="pb-8 pr-6"
                 label="Print Class"
                 name="print_class"
                 type="text"
@@ -118,32 +118,30 @@ const Edit = () => {
                 value={data.print_class}
                 onChange={e => setData('print_class', e.target.value)}
               />
-              <div className="flex flex-wrap">
-                <FileInput
-                  className="w-full pb-8 pr-6 lg:w-1/2"
-                  label="Template"
-                  name="template"
-                  accept=".txt, .glabels, .nlbl"
-                  errors={errors.template}
-                  value={data.template}
-                  onChange={template => {
-                    setData(values => ({
-                      ...values,
-                      template: template,
-                      templateCurrent: template === null ? '' : template.name
-                    }));
-                  }}
-                />
-                <div className="mt-9">{data.templateCurrent}</div>
-              </div>
               <FileInput
-                className="w-full pb-8 pr-6 lg:w-1/2"
+                className="w-full pb-8 pr-6"
+                label="Template"
+                name="template"
+                accept=".txt, .glabels, .nlbl"
+                errors={errors.template}
+                value={data.template}
+                onChange={template => {
+                  setData(values => ({
+                    ...values,
+                    template: template,
+                    templateCurrent: template === null ? '' : template.name
+                  }));
+                }}
+              />
+              <div className="mt-0">{data.templateCurrent}</div>
+              <FileInput
+                className="w-full pb-8 pr-6"
                 label="Image"
-                name="image"
+                name="imageUrl"
                 accept="image/*"
-                errors={errors.image}
-                value={data.image}
-                onChange={image => setData('image', image)}
+                errors={errors.imageUrl}
+                value={data.imageUrl}
+                onChange={imageUrl => setData('imageUrl', imageUrl)}
               />
               {progress && (
                 <progress value={progress.percentage} max="100">
@@ -151,9 +149,9 @@ const Edit = () => {
                 </progress>
               )}
             </div>
-            <div className="w-1/2">
-              {data.imageUrl && (
-                <img src={data.imageUrl} className="block mr-2 -my-2" />
+            <div className="w-1/4">
+              {print_template.imageUrl && (
+                <img src={print_template.imageUrl} className="mx-auto mt-6" />
               )}
             </div>
           </div>

@@ -56,7 +56,7 @@ class PrintTemplateUpdateRequest extends FormRequest
                     }
                 }
             ],
-            'image' => [
+            'imageUrl' => [
                 'nullable',
                 'image',
                 function ($attribute, $value, $fail) use ($id) {

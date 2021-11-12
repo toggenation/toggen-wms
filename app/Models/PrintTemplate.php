@@ -20,10 +20,10 @@ class PrintTemplate extends Model
 
         $path = config('toggen.print.template.templates');
 
-        $this->handleUploadAttribute($template, 'template', $path);
+        return $this->handleUploadAttribute($template, 'template', $path);
     }
 
-    public function setImageAttribute($image)
+    public function setImageUrlAttribute($image)
     {
         if (!$image) return;
 
@@ -52,10 +52,10 @@ class PrintTemplate extends Model
     public function getImageUrlAttribute()
     {
 
-        return $this->photoUrl($this->getImageSettings());
+        return $this->imageUrl($this->getImageSettings());
     }
 
-    public function photoUrl(array $attributes)
+    public function imageUrl(array $attributes)
     {
 
 

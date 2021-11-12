@@ -20,7 +20,7 @@ class PrintTemplateResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'image' => $this->image,
+            // 'image' => $this->image,
             'imageUrl' => $this->imageUrl,
             'print_class' => $this->print_class,
             'active' => $this->active,
