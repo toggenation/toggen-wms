@@ -15,16 +15,17 @@ class PrintTemplateResource extends JsonResource
     public function toArray($request)
     {
 
-        return parent::toArray($request);
-        // return [
-        //     'id' => $this->id,
-        //     'name' => $this->name,
-        //     'description' => $this->description,
-        //     'image' => $this->image,
-        //     'print_class' => $this->print_class,
-        //     'active' => $this->active,
-        //     'show_in_ui' => $this->show_in_ui
+        // return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'image' => $this->image,
+            'imageUrl' => $this->imageUrl,
+            'print_class' => $this->print_class,
+            'active' => $this->active,
+            'show_in_ui' => $this->show_in_ui
 
-        // ];
+        ];
     }
 }

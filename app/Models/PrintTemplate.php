@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\App;
+use League\Glide\Server;
 
 class PrintTemplate extends Model
 {
@@ -27,7 +29,7 @@ class PrintTemplate extends Model
 
         $path = config('toggen.print.template.examples');
 
-        $this->handleUploadAttribute($image, 'template', $path);
+        $this->handleUploadAttribute($image, 'image', $path);
     }
 
     protected function handleUploadAttribute($field, $attribute, $dir)
@@ -37,17 +39,36 @@ class PrintTemplate extends Model
             : $field;
     }
 
-    //   public function getTemplateAttribute()
-    // {
-    //     return $this->photoUrl(['w' => 40, 'h' => 40, 'fit' => 'crop']);
-    // }
+    public function getImageSettings()
+    {
+        $route = request()->route()->getName();
 
-    // public function photoUrl(array $attributes)
-    // {
-    //     if ($this->photo_path) {
-    //         return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
-    //     }
-    // }
+        if ($route == 'admin.print-templates.edit') {
+            return ['w' => 210, 'h' => 297, 'fit' => 'contain', 'border' => '1,lightgray,shrink'];
+        }
+
+        return ['w' => 30, 'h' => 40, 'fit' => 'contain', 'border' => '1,lightgray,shrink'];
+    }
+    public function getImageUrlAttribute()
+    {
+
+        return $this->photoUrl($this->getImageSettings());
+    }
+
+    public function photoUrl(array $attributes)
+    {
+
+
+        if ($this->image) {
+            //$path = storage_path('app');
+
+            $glide = App::make(Server::class);
+            $path = url($glide->getBaseUrl() . '/' . $this->image) . "?";
+            $path .= http_build_query($attributes);
+
+            return $path;
+        }
+    }
 
     public function scopeFilter($query, array $filters)
     {

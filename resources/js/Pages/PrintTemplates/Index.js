@@ -36,47 +36,56 @@ const Index = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map(({ id, name, active, deleted_at, description }) => {
-              return (
-                <tr
-                  key={id}
-                  className="hover:bg-gray-100 focus-within:bg-gray-100"
-                >
-                  <td className="border-t">
-                    <InertiaLink
-                      tabIndex="-1"
-                      href={route('admin.print-templates.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
-                    >
-                      <IconActive isActive={active} />
-                    </InertiaLink>
-                  </td>
-                  <td className="border-t">
-                    <InertiaLink
-                      href={route('admin.print-templates.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
-                    >
-                      {name}
-                      {deleted_at && (
-                        <Icon
-                          name="trash"
-                          className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
-                        />
-                      )}
-                    </InertiaLink>
-                  </td>
-                  <td className="border-t">
-                    <InertiaLink
-                      tabIndex="-1"
-                      href={route('admin.print-templates.edit', id)}
-                      className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
-                    >
-                      {description}
-                    </InertiaLink>
-                  </td>
-                </tr>
-              );
-            })}
+            {data.map(
+              ({ id, name, active, deleted_at, description, imageUrl }) => {
+                return (
+                  <tr
+                    key={id}
+                    className="hover:bg-gray-100 focus-within:bg-gray-100"
+                  >
+                    <td className="border-t">
+                      <InertiaLink
+                        tabIndex="-1"
+                        href={route('admin.print-templates.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                      >
+                        <IconActive isActive={active} />
+                      </InertiaLink>
+                    </td>
+                    <td className="border-t">
+                      <InertiaLink
+                        href={route('admin.print-templates.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo-700 focus:outline-none"
+                      >
+                        {imageUrl && (
+                          <img
+                            src={imageUrl}
+                            className="block w-6 h-7 mr-2 -my-2"
+                          />
+                        )}
+
+                        {name}
+                        {deleted_at && (
+                          <Icon
+                            name="trash"
+                            className="flex-shrink-0 w-3 h-3 ml-2 text-gray-400 fill-current"
+                          />
+                        )}
+                      </InertiaLink>
+                    </td>
+                    <td className="border-t">
+                      <InertiaLink
+                        tabIndex="-1"
+                        href={route('admin.print-templates.edit', id)}
+                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                      >
+                        {description}
+                      </InertiaLink>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
             {data.length === 0 && (
               <tr>
                 <td className="px-6 py-4 border-t" colSpan="4">

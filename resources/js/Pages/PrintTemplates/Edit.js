@@ -11,6 +11,7 @@ import SelectInput from '@/Shared/SelectInput';
 import TrashedMessage from '@/Shared/TrashedMessage';
 import CheckBox from '@/Shared/Form/CheckBox';
 import FileInput from '@/Shared/FileInput';
+import { values } from 'lodash';
 
 const Edit = () => {
   const { print_template } = usePage().props;
@@ -19,11 +20,12 @@ const Edit = () => {
     name: print_template.name || '',
     description: print_template.description || '',
     template: '',
-    template_current: print_template.template || '',
+    templateCurrent: print_template.template || '',
     image: '',
     image_current: print_template.image || '',
     show_in_ui: print_template.show_in_ui ? true : false,
     print_class: print_template.print_class,
+    imageUrl: print_template.imageUrl || '',
     _method: 'PUT'
   });
 
@@ -70,7 +72,7 @@ const Edit = () => {
       )}
       <div className="max-w-5xl p-4 bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
-          <div className="flex mb-8">
+          <div className="flex mb-8 w-full">
             <div className="w-full bg-transparent">
               <CheckBox
                 divClasses="mb-6 w-1/2"
@@ -90,7 +92,7 @@ const Edit = () => {
               />
 
               <TextInput
-                className="w-full pb-8 pr-6"
+                className="w-1/2 pb-8 pr-6"
                 label="Name"
                 name="name"
                 errors={errors.name}
@@ -98,7 +100,7 @@ const Edit = () => {
                 onChange={e => setData('name', e.target.value)}
               />
               <TextInput
-                className="w-full pb-8 pr-6"
+                className="w-1/2 pb-8 pr-6"
                 label="Description"
                 name="description"
                 type="text"
@@ -108,7 +110,7 @@ const Edit = () => {
               />
 
               <TextInput
-                className="w-full pb-8 pr-6"
+                className="w-1/2 pb-8 pr-6"
                 label="Print Class"
                 name="print_class"
                 type="text"
@@ -124,9 +126,15 @@ const Edit = () => {
                   accept=".txt, .glabels, .nlbl"
                   errors={errors.template}
                   value={data.template}
-                  onChange={template => setData('template', template)}
+                  onChange={template => {
+                    setData(values => ({
+                      ...values,
+                      template: template,
+                      templateCurrent: template === null ? '' : template.name
+                    }));
+                  }}
                 />
-                <div className="align-text-middle">{data.template_current}</div>
+                <div className="mt-9">{data.templateCurrent}</div>
               </div>
               <FileInput
                 className="w-full pb-8 pr-6 lg:w-1/2"
@@ -141,6 +149,11 @@ const Edit = () => {
                 <progress value={progress.percentage} max="100">
                   {progress.percentage}%
                 </progress>
+              )}
+            </div>
+            <div className="w-1/2">
+              {data.imageUrl && (
+                <img src={data.imageUrl} className="block mr-2 -my-2" />
               )}
             </div>
           </div>

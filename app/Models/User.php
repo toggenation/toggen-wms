@@ -61,7 +61,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         if ($this->photo_path) {
             //$path = storage_path('app');
-            $glide = App::Make(Server::class);
+            $glide = App::make(Server::class);
             $path = url($glide->getBaseUrl() . '/' . $this->photo_path) . "?";
             $path .= http_build_query($attributes);
 

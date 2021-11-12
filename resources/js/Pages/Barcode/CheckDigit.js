@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { InertiaLink, useForm, usePage } from '@inertiajs/inertia-react';
 import Layout from '@/Shared/Layout';
@@ -9,19 +9,29 @@ import TextAreaInput from '@/Shared/Form/TextAreaInput';
 import CheckBox from '@/Shared/Form/CheckBox';
 
 const CheckDigit = props => {
-  const { barcode } = usePage().props;
+  let { barcode: barcodeCalced } = usePage().props;
 
   const { data, setData, errors, post, processing } = useForm({
     barcode: ''
   });
 
+  let [bcc, setBcc] = useState(barcodeCalced);
+
+  useEffect(() => {
+    setBcc(barcodeCalced);
+  }, [barcodeCalced]);
+
   const handleSubmit = e => {
     e.preventDefault();
-    post(route('barcode.calc'));
+    post(route('admin.barcode.calc'));
   };
 
   const handleUpdate = e => {
-    setData('barcode', e.target.value);
+    setBcc('');
+    setData(values => ({
+      ...values,
+      [e.target.name]: e.target.value
+    }));
   };
 
   return (
@@ -30,33 +40,37 @@ const CheckDigit = props => {
       <div className="lg:max-w-3xl sm:w-full overflow-hidden bg-white rounded shadow">
         <form onSubmit={handleSubmit}>
           <div className="p-8 -mb-8 -mr-6 flex flex-wrap">
-            <div className="lg:w-1/3 sm:w-full">
-              <TextInput
-                className="w-full pr-6"
-                label="Barcode without checkdigit"
-                name="barcode"
-                errors={errors.barcode}
-                value={data.barcode}
-                onChange={e => handleUpdate(e)}
-              />
-              <div className="pb-4 text-xs">{data.barcode.length}</div>
-            </div>
-            <div className="mb-6 lg:w-1/3 sm:w-full block">
-              <label>Length</label>
-              <div
-                style={{ height: '42px' }}
-                className="mt-2 border leading-normal border-gray-300 p-2 rounded mr-4"
-              >
-                {barcode && barcode.length}
+            <div className="lg:w-1/2 sm:w-full pr-5 ">
+              <div className="mb-2">
+                <label htmlFor="ig">Barcode without checkdigit</label>
               </div>
+              <div className="flex flex-wrap items-stretch w-full mb-4 relative">
+                <input
+                  name="barcode"
+                  onChange={e => handleUpdate(e)}
+                  type="text"
+                  value={data.barcode}
+                  className="py-2 flex-shrink rounded flex-grow flex-auto rounded-r-none leading-normal w-px flex-1 border h-10 border-gray-300 px-3 relative"
+                />
+                <div className="flex -mr-px">
+                  <span className="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-dark text-sm">
+                    {data.barcode.length}
+                  </span>
+                </div>
+              </div>
+              {errors.barcode && <div>{errors.barcode}</div>}
             </div>
-            <div className="mb-6 lg:w-1/3 block sm:w-full">
-              <label>Barcode with checkdigit</label>
-              <div
-                style={{ height: '42px' }}
-                className="mt-2 border leading-normal border-gray-300 p-2 rounded mr-4"
-              >
-                {barcode}
+            <div className="lg:w-1/2 sm:w-full pr-5 ">
+              <div className="mb-2">Barcode with checkdigit</div>
+              <div className="flex flex-wrap items-stretch w-full mb-4 relative">
+                <div className="py-2 flex-shrink rounded flex-grow flex-auto rounded-r-none leading-normal w-px flex-1 border h-10 border-gray-300 px-3 relative">
+                  {bcc}
+                </div>
+                <div className="flex -mr-px">
+                  <span className="flex items-center leading-normal bg-grey-lighter rounded rounded-l-none border border-l-0 border-gray-300 px-3 whitespace-no-wrap text-grey-dark text-sm">
+                    {bcc ? bcc.length : 0}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

@@ -14,6 +14,15 @@ class PrintTemplateCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+
+        return $this->collection->map->only(
+            'id',
+            'active',
+            'name',
+            'description',
+            'imageUrl',
+            'deleted_at',
+        );
     }
 }

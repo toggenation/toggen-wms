@@ -89,6 +89,7 @@ class PrintTemplateController extends Controller
 
         // dd(request()->file('template')->getClientOriginalName());
         // return "Done";
+
         $printTemplate->update(
             $request->validated()
         );
@@ -102,8 +103,11 @@ class PrintTemplateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PrintTemplate $printTemplate)
     {
-        //
+        $name = $printTemplate->name;
+
+        $printTemplate->delete();
+        return redirect(route('admin.print-templates'))->with("success", sprintf("Print template %s%s%s deleted", chr(34), $name, chr(34)));
     }
 }
