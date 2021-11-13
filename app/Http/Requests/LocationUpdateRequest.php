@@ -7,6 +7,15 @@ use Illuminate\Validation\Rule;
 
 class LocationUpdateRequest extends FormRequest
 {
+
+    protected $capacityMax;
+
+    public function __construct()
+    {
+        $this->capacityMax = config('toggen.warehouse.capacity.max');
+    }
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,7 +43,10 @@ class LocationUpdateRequest extends FormRequest
                 Rule::unique('locations', 'name')->ignore($id)
             ],
             'active' => ['boolean'],
-            'capacity' => ['integer']
+            'capacity' => [
+                'integer',
+                'between:1,' . $this->capacityMax
+            ]
         ];
     }
 }

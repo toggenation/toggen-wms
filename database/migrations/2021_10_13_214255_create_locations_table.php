@@ -18,7 +18,7 @@ class CreateLocationsTable extends Migration
             $table->boolean('active')->default(true);
             $table->string('name', 75)->unique();
             $table->integer('capacity');
-            $table->boolean('hidden');
+            $table->boolean('hidden')->default(false);
             $table->string('description', 75);
             $table->integer('product_type_id');
             $table->timestamps();

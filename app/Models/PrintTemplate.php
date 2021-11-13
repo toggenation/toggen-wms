@@ -35,7 +35,7 @@ class PrintTemplate extends Model
     protected function handleUploadAttribute($field, $attribute, $dir)
     {
         $this->attributes[$attribute] = $field instanceof UploadedFile
-            ? $field->storeAs($dir, $field->getClientOriginalName())
+            ? $field->store($dir)
             : $field;
     }
 

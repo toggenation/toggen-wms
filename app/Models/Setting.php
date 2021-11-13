@@ -11,6 +11,11 @@ class Setting extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function get($name)
+    {
+        return $this->where('name', $name)->first();
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {

@@ -7,7 +7,7 @@ import TextInput from '@/Shared/TextInput';
 import SelectInput from '@/Shared/SelectInput';
 import CheckBox from '@/Shared/Form/CheckBox';
 const Create = () => {
-  const { root_menus } = usePage().props;
+  const { root_menus, icon_list } = usePage().props;
   const { data, setData, errors, post, processing } = useForm({
     active: true,
     name: '',
@@ -82,7 +82,28 @@ const Create = () => {
                 })}
             </SelectInput>
 
-            <TextInput
+            <SelectInput
+              className="w-full pb-8 pr-6 lg:w-1/2"
+              label="Icon"
+              name="icon"
+              errors={errors.icon}
+              value={data.icon}
+              onChange={e => setData('icon', e.target.value)}
+            >
+              <option key={0} value="">
+                (Select)
+              </option>
+              {icon_list &&
+                icon_list.map(icon => {
+                  return (
+                    <option key={icon.key} value={icon.key}>
+                      {icon.value}
+                    </option>
+                  );
+                })}
+            </SelectInput>
+
+            {/* <TextInput
               className="w-full pb-8 pr-6 lg:w-1/2"
               label="Icon"
               name="icon"
@@ -90,7 +111,7 @@ const Create = () => {
               errors={errors.icon}
               value={data.icon}
               onChange={e => setData('icon', e.target.value)}
-            />
+            /> */}
           </div>
           <div className="flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200">
             <LoadingButton

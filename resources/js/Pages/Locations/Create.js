@@ -9,26 +9,28 @@ import TextAreaInput from '@/Shared/Form/TextAreaInput';
 import CheckBox from '@/Shared/Form/CheckBox';
 
 const Create = () => {
+  const { product_types } = usePage().props;
   const { data, setData, errors, post, processing } = useForm({
     active: true,
     name: '',
-    setting: '',
-    comment: ''
+    description: '',
+    capacity: '',
+    product_type_id: ''
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    post(route('admin.settings.store'));
+    post(route('admin.locations.store'));
   }
 
   return (
     <div>
       <h1 className="mb-8 text-3xl font-bold">
         <InertiaLink
-          href={route('admin.settings')}
+          href={route('admin.locations')}
           className="text-indigo-600 hover:text-indigo-700"
         >
-          Setting
+          Location
         </InertiaLink>
         <span className="font-medium text-indigo-600"> /</span> Create
       </h1>
@@ -53,14 +55,23 @@ const Create = () => {
             />
             <TextInput
               className="w-full pb-8 pr-6"
-              label="Setting"
-              name="setting"
+              label="Description"
+              name="description"
               type="text"
-              errors={errors.setting}
-              value={data.setting}
-              onChange={e => setData('setting', e.target.value)}
+              errors={errors.description}
+              value={data.description}
+              onChange={e => setData('description', e.target.value)}
             />
-
+            <TextInput
+              className="w-full pb-8 pr-6"
+              label="Capacity"
+              name="capacity"
+              type="text"
+              errors={errors.capacity}
+              value={data.capacity}
+              onChange={e => setData('capacity', e.target.value)}
+            />
+            {/* 
             <TextAreaInput
               name="comment"
               errors={errors.comment}
@@ -68,8 +79,29 @@ const Create = () => {
               onChange={e => setData('comment', e.target.value)}
               label="Item comment"
               placeholder="Please enter a comment"
-            />
+            /> */}
+            <SelectInput
+              className="w-full pb-8 pr-6 lg:w-1/2"
+              label="Product type"
+              name="product_type_id"
+              errors={errors.product_type_id}
+              value={data.product_type_id}
+              onChange={e => setData('product_type_id', e.target.value)}
+            >
+              <option key={0} value="">
+                (select)
+              </option>
+              {product_types &&
+                product_types.map(productType => {
+                  return (
+                    <option key={productType.id} value={productType.id}>
+                      {productType.name}
+                    </option>
+                  );
+                })}
+            </SelectInput>
           </div>
+
           <div className="flex items-center justify-end px-8 py-4 bg-gray-100 border-t border-gray-200">
             <LoadingButton
               loading={processing}

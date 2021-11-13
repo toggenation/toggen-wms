@@ -30,7 +30,7 @@ const LabelPrint = () => {
     e.preventDefault();
 
     if (confirm('Are you sure want to send a print?')) {
-      post(route('users.store'));
+      post(route('print.pallet-print'));
     }
   }
 
@@ -193,9 +193,9 @@ const LabelPrint = () => {
             </div>
           </form>
         </div>
-        <div className={panelClasses}>
+        {/* <div className={panelClasses}>
           <h4>Label 2</h4>
-        </div>
+        </div> */}
       </div>
     </div>
   );

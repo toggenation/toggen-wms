@@ -1,12 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faFileInvoice,
   faCheck,
   faPlus,
   faWarehouse,
   faTags,
   faCog,
   faTimes,
+  faPrint,
   faCogs,
   faTable,
   faListAlt,
@@ -32,7 +34,9 @@ import PalletLabelIcon from '@/Shared/PalletLabelIcon';
 export default ({ name, className }) => {
   const importedIcon =
     {
+      faFileInvoice,
       faArrowDown,
+      faPrint,
       faArrowLeft,
       faArrowRight,
       faArrowUp,

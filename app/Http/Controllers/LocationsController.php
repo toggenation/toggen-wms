@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LocationStoreRequest;
 use App\Http\Requests\LocationUpdateRequest;
 use App\Models\Location;
 // use Illuminate\Http\Request;
@@ -54,9 +55,13 @@ class LocationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Location $location, LocationStoreRequest $request)
     {
-        //
+        $location->create(
+            $request->validated()
+        );
+
+        return redirect(route('admin.locations'))->with('success', 'Location created.');
     }
 
     /**

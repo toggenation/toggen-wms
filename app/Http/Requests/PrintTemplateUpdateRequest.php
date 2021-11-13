@@ -47,26 +47,26 @@ class PrintTemplateUpdateRequest extends FormRequest
             'template' => [
                 'nullable',
                 new FilenameRule(['glabels', 'nlbl', 'cablbl', 'txt', 'csv']),
-                function ($attribute, $value, $fail) use ($id) {
-                    $file = $value->getClientOriginalName();
-                    $count = PrintTemplate::query()->where('template', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
+                // function ($attribute, $value, $fail) use ($id) {
+                //     $file = $value->getClientOriginalName();
+                //     $count = PrintTemplate::query()->where('template', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
 
-                    if ($count > 0) {
-                        $fail("Name for {$attribute} already taken");
-                    }
-                }
+                //     if ($count > 0) {
+                //         $fail("Name for {$attribute} already taken");
+                //     }
+                // }
             ],
             'imageUrl' => [
                 'nullable',
                 'image',
-                function ($attribute, $value, $fail) use ($id) {
-                    $file = $value->getClientOriginalName();
-                    $count = PrintTemplate::query()->where('image', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
+                // function ($attribute, $value, $fail) use ($id) {
+                //     $file = $value->getClientOriginalName();
+                //     $count = PrintTemplate::query()->where('image', 'LIKE', "%/{$file}")->where('id', '!=', $id)->count();
 
-                    if ($count > 0) {
-                        $fail("Name for {$attribute} already taken");
-                    }
-                }
+                //     if ($count > 0) {
+                //         $fail("Name for {$attribute} already taken");
+                //     }
+                // }
             ],
             'show_in_ui' => ['boolean'],
             'print_class' => ['nullable']

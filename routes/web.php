@@ -16,6 +16,7 @@
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\BlankController;
+use App\Http\Controllers\PrintController;
 use App\Models\Menu;
 use App\Models\Item;
 use App\Models\ProductionLine;
@@ -193,17 +194,8 @@ Route::get('print', 'BlankController@placeHolder')->name('print');
 
 Route::prefix('print')->name('print.')->group(
     function () {
-        Route::get('pallet-labels', function (Batch $batch) {
-            return Inertia::render('Print/LabelPrint', [
-                'items' => Item::where('active', 1)
-                    ->orderBy('code')
-                    ->get(),
-                'productionLines' => ProductionLine::where('active', 1)
-                    ->orderBy('name')
-                    ->get(),
-                'batchNos' => $batch::generate()
-            ]);
-        })->name('pallet-labels');
+        Route::get('pallet-labels', [PrintController::class, 'pallet'])->name('pallet-labels');
+        Route::post('pallet-print', [PrintController::class, 'palletPrint'])->name('pallet-print');
         Route::get('reprint', 'BlankController@placeHolder')->name('reprint');
         Route::get('choose-label', 'BlankController@placeHolder')->name('choose-label');
     }
@@ -263,3 +255,6 @@ Route::get(
         dd($validator->errors());
     }
 );
+
+
+include(__DIR__ . '/james.php');

@@ -1,6 +1,17 @@
 <?php
 
 return [
+    'icons' => [
+        'additional' => [
+            'printer' => 'Printer',
+            'warehouse' => 'Locations'
+        ]
+    ],
+    'warehouse' => [
+        'capacity' => [
+            'max' => 99999,
+        ]
+    ],
     'print' => [
         'template' =>
         [

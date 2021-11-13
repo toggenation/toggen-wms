@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MenuStoreRequest;
 use App\Http\Requests\MenuUpdateRequest;
 use App\Http\Resources\MenuCollection;
+use App\Lib\IconList;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -46,7 +47,8 @@ class MenusController extends Controller
         return Inertia::render('Menus/Create', [
             // 'user' => new UserResource($user),
             'root_menus' => Menu::whereIsRoot()->get(),
-            'routes' => array_keys(Route::getRoutes()->getRoutesByName())
+            'routes' => array_keys(Route::getRoutes()->getRoutesByName()),
+            'icon_list' => (new IconList)->get()
 
             // 'roles' => Role::where('active', 1)->get()
         ]);
@@ -89,7 +91,8 @@ class MenusController extends Controller
         return Inertia::render('Menus/Edit', [
             // 'user' => new UserResource($user),
             'menu' => $menu,
-            'root_menus' => Menu::whereIsRoot()->get()
+            'root_menus' => Menu::whereIsRoot()->get(),
+            'icon_list' => (new IconList)->get()
 
             // 'roles' => Role::where('active', 1)->get()
         ]);

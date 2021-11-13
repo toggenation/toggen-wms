@@ -85,6 +85,12 @@ class MenuSeeder extends Seeder
 
                     ],
                     [
+                        'name' => 'Product Types',
+                        'route_url' => 'admin.print-types',
+                        'active' => 1,
+                        'icon' => 'faFileAlt'
+                    ],
+                    [
                         'name' => 'Locations',
                         'route_url' => 'admin.locations',
                         'active' => 1,
@@ -138,7 +144,7 @@ class MenuSeeder extends Seeder
                     [
                         'name' => 'Pallet Labels',
                         'route_url' => 'print.pallet-labels',
-                        'icon' => 'faTags'
+                        'icon' => 'faFileInvoice'
                     ],
                     [
                         'name' => "Reprint",

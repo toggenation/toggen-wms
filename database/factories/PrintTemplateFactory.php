@@ -25,7 +25,7 @@ class PrintTemplateFactory extends Factory
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(4),
             'template' => $this->faker->word() . '.' . $this->faker->fileExtension(), // glabels, nicelabels, cablabel
-            'image' => $this->faker->word() . '.png',
+            'image' => 'print/examples/missing.png',
             'show_in_ui' => $this->faker->randomElement([true, false]),
             'print_class' => 'App\Toggen\Print\Templates',
         ];
