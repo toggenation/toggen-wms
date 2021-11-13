@@ -31,7 +31,9 @@ class PrintController extends Controller
 
         PalletLabelPrint::dispatch($request->validated());
 
-        dd($request->validated());
+        // dd($request->validated());
+
+
 
         //Pallet::make([])
 

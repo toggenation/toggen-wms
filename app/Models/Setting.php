@@ -11,9 +11,9 @@ class Setting extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function get($name)
+    public static function get($name)
     {
-        return $this->where('name', $name)->first();
+        return self::where('name', $name)->firstOrFail()->setting;
     }
 
     public function scopeFilter($query, array $filters)

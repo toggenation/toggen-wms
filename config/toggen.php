@@ -1,6 +1,13 @@
 <?php
 
 return [
+    'barcode' => [
+        'sscc' => [
+            'serialReference' => 'SSCC_REFERENCE',
+            'companyPrefix' => 'GS1_COMPANY_PREFIX',
+            'extensionDigit' => 'SSCC_EXTENSION_DIGIT'
+        ]
+    ],
     'icons' => [
         'additional' => [
             'printer' => 'Printer',

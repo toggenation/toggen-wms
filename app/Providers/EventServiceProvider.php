@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\PalletLabelPrint;
 use App\Listeners\CreatePalletRecord;
+use App\Listeners\PrintPalletLabel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -21,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         PalletLabelPrint::class => [
+            PrintPalletLabel::class,
             CreatePalletRecord::class
         ]
     ];

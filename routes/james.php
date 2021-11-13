@@ -1,7 +1,18 @@
 <?php
 
+use App\Lib\Barcode\Sscc;
 use App\Lib\IconList;
+use App\Models\Setting;
+use App\Services\Barcode;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+
+Route::get('sscc/{sscc?}', function ($sscc = null) {
+
+    $sscc = (new Sscc(new Setting))->get($sscc);
+
+    dd($sscc);
+});
 
 Route::get('readjs', function () {
 

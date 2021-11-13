@@ -88,29 +88,26 @@ class Barcode
         return in_array($length, [8, 12, 13, 14, 17, 18]);
     }
 
-    public function validate($barcode, $type)
-    {
-        if ($this->isValidBarcode($barcode)) {
-            return true;
-        }
 
-        throw new InvalidBarcodeException('Invalid ' . $type . ' barcode');
+    public function validateSscc($barcode)
+    {
+        if (strlen($barcode) === self::SSCC_LENGTH && $this->isValidBarcode($barcode)) return;
+
+        throw new InvalidBarcodeException('Invalid SSCC barcode');
     }
 
     public function sscc($extensionDigit, $companyPrefix, $serialReference)
     {
-        $type = 'SSCC';
-
         $this->checkSsccArguments($extensionDigit, $companyPrefix, $serialReference);
 
-        $sscc = $this->generate($type, $companyPrefix, $serialReference, self::SSCC_LENGTH, $extensionDigit, $type);
+        $sscc = $this->generate($companyPrefix, $serialReference, self::SSCC_LENGTH, $extensionDigit);
 
-        $this->validate($sscc, $type);
+        $this->validateSscc($sscc);
 
         return $sscc;
     }
 
-    public function generate($type, $companyPrefix, $serialReference, $length, $extensionDigit = '')
+    public function generate($companyPrefix, $serialReference, $length, $extensionDigit = '')
     {
         $barcode = (string) $extensionDigit . $companyPrefix;
 
@@ -121,8 +118,6 @@ class Barcode
         $barcode .= sprintf($format, $serialReference);
 
         $barcode = $barcode . (string) $this->checkDigit($barcode);
-
-        $this->validate($barcode, $type);
 
         return $barcode;
     }

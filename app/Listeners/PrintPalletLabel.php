@@ -6,7 +6,7 @@ use App\Events\PalletLabelPrint;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class CreatePalletRecord
+class PrintPalletLabel
 {
     /**
      * Create the event listener.
@@ -26,8 +26,6 @@ class CreatePalletRecord
      */
     public function handle(PalletLabelPrint $event)
     {
-        //
-
-        var_dump("Hi inside create pallet record");
+        var_dump("Inside print pallet label listener");
     }
 }

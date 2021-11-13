@@ -43,7 +43,7 @@ class ItemFactory extends Factory
             'variant' => $this->faker->word(),
             'unit_net_contents' => $this->faker->randomElement([375, 200, 700, 500]),
             'unit_of_measure_id' => UnitsOfMeasure::factory(),
-            'days_life' => $this->faker->randomElement([173, 274, 365, 730]),
+            'days_life' => $this->faker->randomElement([90, 173, 274, 365, 730]),
             'min_days_life' => 90,
             'comment' => $this->faker->paragraph(2),
             //
